@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:11.4
+    container_name: mariadb_proyecto
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: Clave$1
+      MYSQL_DATABASE: ComponentesDB
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: Clave$1
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
