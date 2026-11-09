@@ -31,3 +31,19 @@ export const obtenerCatalogoPorCategoria = async (req, res) => {
     res.status(500).json({ success: false, error: 'Error interno del servidor al consultar el catálogo por categoría' });
   }
 }
+
+export const obtenerComponentePorSelector = async (req, res) => {
+  try {
+    const { selector } = req.params;
+    const componente = await ComponenteModel.obtenerComponentePorSelector(selector);
+
+    if (!componente) {
+      return res.status(404).json({ success: false, error: 'Componente no encontrado' });
+    }
+
+    res.json({ success: true, data: componente });
+  } catch (error) {
+    console.error('Error al obtener el componente por selector:', error.message);
+    res.status(500).json({ success: false, error: 'Error interno del servidor al consultar el componente' });
+  }
+}

@@ -99,6 +99,10 @@ POST   /api/favoritos                 → { componenteId }
 DELETE /api/favoritos/:componenteId   → requiere Bearer token
 ```
 
+`demo_key` viene **siempre** que la respuesta incluya ejemplos: será `null`
+cuando ese ejemplo no tenga demo interactiva. Los endpoints que no devuelven
+ejemplos (por ejemplo, un índice de navegación) no incluyen `demo_key`.
+
 Cambios de BD necesarios:
 
 ```sql
