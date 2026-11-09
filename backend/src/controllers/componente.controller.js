@@ -14,6 +14,20 @@ export const obtenerCatalogo = async (req, res) => {
       error: "Error interno del servidor al consultar el catalogo"
     })
   }
-  
 }
 
+export const obtenerCatalogoPorCategoria = async (req, res) => {
+  try{
+    const { slug } = req.params;
+    const categoria = await ComponenteModel.obtenerCatalogoPorCategoria(slug);
+
+    if (!categoria) {
+      return res.status(404).json({ success: false, error: 'Categoría no encontrada' });
+    }
+
+    res.json({ success: true, data: categoria });
+  }catch(error){
+    console.error('Error al obtener el catálogo de componentes por categoría:', error.message);
+    res.status(500).json({ success: false, error: 'Error interno del servidor al consultar el catálogo por categoría' });
+  }
+}
