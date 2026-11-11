@@ -35,6 +35,15 @@ export const FavoritoModel = {
             }
         }));
     },
+
+    async obtenerPorUsuarioYComponente(usuarioId, componenteId) {
+        const [rows] = await pool.query(
+            'SELECT id FROM favoritos WHERE usuario_id = ? AND componente_id = ?',
+            [usuarioId, componenteId]
+        );
+        return rows[0] ?? null;
+    },
+
     async agregar(usuarioId, componenteId) {
         const [result] = await pool.query(
             'INSERT INTO favoritos (usuario_id, componente_id) VALUES (?, ?)',
@@ -42,7 +51,12 @@ export const FavoritoModel = {
         );
         return result.insertId;
     },
-    async eliminar(favoritoId) {
-        await pool.query('DELETE FROM favoritos WHERE id = ?', [favoritoId]);
+
+    async eliminarPorUsuarioIdYComponenteId(usuarioId, componenteId) {
+        const [result] = await pool.query(
+            'DELETE FROM favoritos WHERE usuario_id = ? AND componente_id = ?',
+            [usuarioId, componenteId]
+        );
+        return result.affectedRows > 0;
     }
 };

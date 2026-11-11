@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-const JWT_SECRET = process.env.JWT_SECRET || 'tu_secreto_super_seguro_cambialo';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export const verificarToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];

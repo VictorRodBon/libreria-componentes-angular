@@ -8,7 +8,7 @@ export const obtenerCatalogo = async (req, res) => {
       data: catalogo
     });
   }catch(error){
-    console.error('Error al obtener el catálogo de componentes:', error.message);
+    console.error('Error al obtener el catálogo de componentes:', error);
     res.status(500).json({
       success:false,
       error: "Error interno del servidor al consultar el catalogo"
@@ -27,7 +27,7 @@ export const obtenerCatalogoPorCategoria = async (req, res) => {
 
     res.json({ success: true, data: categoria });
   }catch(error){
-    console.error('Error al obtener el catálogo de componentes por categoría:', error.message);
+    console.error('Error al obtener el catálogo de componentes por categoría:', error);
     res.status(500).json({ success: false, error: 'Error interno del servidor al consultar el catálogo por categoría' });
   }
 }
@@ -43,7 +43,7 @@ export const obtenerComponentePorSelector = async (req, res) => {
 
     res.json({ success: true, data: componente });
   } catch (error) {
-    console.error('Error al obtener el componente por selector:', error.message);
+    console.error('Error al obtener el componente por selector:', error);
     res.status(500).json({ success: false, error: 'Error interno del servidor al consultar el componente' });
   }
 }

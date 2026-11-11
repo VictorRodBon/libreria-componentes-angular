@@ -3,7 +3,7 @@ import pool from '../config/db.js';
 export const UsuarioModel = {
   // Buscar usuario por correo (para evitar duplicados)
     async buscarPorEmail(email) {
-        const [rows] = await pool.query('SELECT * FROM usuarios WHERE email = ?', [email]);
+        const [rows] = await pool.query('SELECT id, nombre, email, password FROM usuarios WHERE email = ?', [email]);
         return rows[0];
     },
 
