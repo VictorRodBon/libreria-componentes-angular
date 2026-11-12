@@ -19,9 +19,9 @@ import { DemoRegistry } from '../../core/services/demo-registry.service';
   template: `
     <div class="demo-host">
       @if (loading()) {
-        <p>Cargando demo…</p>
+        <p class="estado">Cargando demo…</p>
       } @else if (error()) {
-        <p class="error">{{ error() }}</p>
+        <p class="estado error">{{ error() }}</p>
       } @else {
         @if (component(); as comp) {
           <ng-container [ngComponentOutlet]="comp"></ng-container>
@@ -33,8 +33,19 @@ import { DemoRegistry } from '../../core/services/demo-registry.service';
     .demo-host {
       min-height: 4rem;
     }
+    .estado {
+      margin: 0;
+      padding: 20px;
+      border: 1px dashed var(--border-strong, #2b3833);
+      border-radius: 12px;
+      color: var(--text-2, #8b9a95);
+      font-size: 0.9375rem;
+    }
     .error {
-      color: #b91c1c;
+      border-style: solid;
+      border-color: rgba(255, 122, 122, 0.35);
+      background: rgba(255, 122, 122, 0.08);
+      color: #ff7a7a;
     }
   `,
 })

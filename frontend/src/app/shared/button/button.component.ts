@@ -3,6 +3,8 @@ import { Component, input } from '@angular/core';
 /**
  * Componente real de la librería.
  * No sabe nada de demos: solo expone sus inputs.
+ * Los colores usan las variables de src/styles.css, con valor por defecto
+ * por si el componente se usa fuera de este proyecto.
  */
 @Component({
   selector: 'app-button',
@@ -16,22 +18,33 @@ import { Component, input } from '@angular/core';
   `,
   styles: `
     .btn {
-      padding: 0.5rem 1rem;
-      border: 0;
-      border-radius: 0.375rem;
-      font-weight: 600;
+      height: 40px;
+      padding: 0 18px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 500;
       cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
     }
     .btn-primary {
-      background: #2563eb;
-      color: #fff;
+      background: var(--accent, #1fe39b);
+      color: var(--accent-ink, #04130d);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: #4cebb0;
     }
     .btn-secondary {
-      background: #e5e7eb;
-      color: #111827;
+      border-color: var(--border-strong, #2b3833);
+      background: var(--surface-2, #151d1a);
+      color: var(--text, #eaf1ee);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      border-color: var(--text-2, #8b9a95);
     }
     .btn:disabled {
-      opacity: 0.5;
+      opacity: 0.4;
       cursor: not-allowed;
     }
   `,
