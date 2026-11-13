@@ -1,0 +1,17 @@
+<div class="demo">
+  <div class="stage">
+    <app-button color="secondary" [disabled]="disabled()">
+      Cancelar
+    </app-button>
+  </div>
+
+  <div class="controls">
+    <label>
+      <input
+        type="checkbox"
+        [checked]="disabled()"
+        (change)="disabled.set($any($event.target).checked)">
+      Deshabilitado
+    </label>
+  </div>
+</div>
