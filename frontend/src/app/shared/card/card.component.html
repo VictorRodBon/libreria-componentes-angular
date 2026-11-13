@@ -1,0 +1,18 @@
+<article class="card">
+  @if (titulo() || subtitulo()) {
+    <header class="card-header">
+      @if (titulo()) {
+        <h3 class="card-title">{{ titulo() }}</h3>
+      }
+      @if (subtitulo()) {
+        <p class="card-subtitle">{{ subtitulo() }}</p>
+      }
+    </header>
+  }
+
+  <div class="card-body">
+    <ng-content></ng-content>
+  </div>
+
+  <footer class="card-footer"><ng-content select="[footer]"></ng-content></footer>
+</article>

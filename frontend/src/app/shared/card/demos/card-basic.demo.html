@@ -1,0 +1,38 @@
+<div class="demo">
+  <div class="stage">
+    <app-card [titulo]="titulo()" [subtitulo]="subtitulo()">
+      <p>Los ingresos netos aumentaron un 14% respecto al trimestre anterior.</p>
+      @if (conPie()) {
+        <div footer>
+          <app-button color="primary">Ver detalles</app-button>
+        </div>
+      }
+    </app-card>
+  </div>
+
+  <div class="controls">
+    <label>
+      Título:
+      <input
+        type="text"
+        [value]="titulo()"
+        (input)="titulo.set($any($event.target).value)">
+    </label>
+
+    <label>
+      Subtítulo:
+      <input
+        type="text"
+        [value]="subtitulo()"
+        (input)="subtitulo.set($any($event.target).value)">
+    </label>
+
+    <label>
+      <input
+        type="checkbox"
+        [checked]="conPie()"
+        (change)="conPie.set($any($event.target).checked)">
+      Mostrar pie
+    </label>
+  </div>
+</div>

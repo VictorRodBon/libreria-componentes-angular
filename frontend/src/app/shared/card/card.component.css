@@ -1,0 +1,44 @@
+:host {
+  display: block;
+}
+
+.card {
+  overflow: hidden;
+  border: 1px solid var(--border-strong, #2b3833);
+  border-radius: 12px;
+  background: var(--surface, #101614);
+  color: var(--text, #eaf1ee);
+}
+
+.card-header {
+  padding: 16px 20px 0;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.card-subtitle {
+  margin: 4px 0 0;
+  color: var(--text-2, #8b9a95);
+  font-size: 0.875rem;
+}
+
+.card-body {
+  padding: 16px 20px;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.card-footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border, #1e2825);
+  background: var(--surface-2, #151d1a);
+}
+
+/* Sin contenido en el pie, no se pinta la franja vacía. */
+.card-footer:empty {
+  display: none;
+}
