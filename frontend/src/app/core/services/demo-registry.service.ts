@@ -13,6 +13,8 @@ const DEMOS: Record<string, DemoLoader> = {
     import('../../shared/button/demos/button-primary.demo').then((m) => m.ButtonPrimaryDemo),
   'button-secondary': () =>
     import('../../shared/button/demos/button-secondary.demo').then((m) => m.ButtonSecondaryDemo),
+    'card-basic': () =>
+    import('../../shared/card/demos/card-basic.demo').then((m) => m.CardBasicDemo),
 };
 
 @Injectable({ providedIn: 'root' })
