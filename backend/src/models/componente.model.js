@@ -137,5 +137,11 @@ export const ComponenteModel = {
       },
       ejemplos: ejemplos.map(mapearEjemplo)
     };
+  },
+
+  // Comprobar si existe un componente por id
+  async existe(componenteId) {
+    const [rows] = await pool.query('SELECT id FROM componentes WHERE id = ?', [componenteId]);
+    return rows.length > 0;
   }
 };

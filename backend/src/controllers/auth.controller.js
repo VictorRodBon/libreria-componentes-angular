@@ -8,17 +8,12 @@ export const registrarUsuario = async (req, res) => {
     try {
         const { nombre, email, password } = req.body;
 
-        // 1. Validar si el usuario ya existe
-        const usuarioExistente = await UsuarioModel.buscarPorEmail(email);
-        if (usuarioExistente) {
-            return res.status(400).json({ success: false, error: 'El correo electrónico ya está registrado.' });
-        }
-
-        // 2. Cifrar la contraseña
+        // 1. Cifrar la contraseña
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, salt);
 
-        // 3. Guardar en la base de datos
+        // 2. Guardar en la base de datos (el UNIQUE de email evita duplicados,
+        //    incluidos los registros simultáneos: se captura ER_DUP_ENTRY abajo)
         const nuevoId = await UsuarioModel.crear(nombre, email, passwordHash);
 
         res.status(201).json({
@@ -27,6 +22,10 @@ export const registrarUsuario = async (req, res) => {
             data: { id: nuevoId, nombre, email }
         });
     } catch (error) {
+        if (error.code === 'ER_DUP_ENTRY') {
+            return res.status(400).json({ success: false, error: 'El correo electrónico ya está registrado.' });
+        }
+        console.error('Error al registrar usuario:', error);
         res.status(500).json({ success: false, error: 'Error en el servidor al registrar usuario' });
     }
 };
@@ -61,6 +60,7 @@ export const loginUsuario = async (req, res) => {
             data: { id: usuario.id, nombre: usuario.nombre, email: usuario.email }
         });
     } catch (error) {
+        console.error('Error al iniciar sesión:', error);
         res.status(500).json({ success: false, error: 'Error en el servidor al iniciar sesión' });
     }
 };
