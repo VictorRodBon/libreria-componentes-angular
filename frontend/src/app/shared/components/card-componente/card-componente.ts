@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CardComponent } from '../../card/card.component';
+import { CardComponent } from '../../examples/card/card.component';
 import { ComponenteTarjeta } from '../../../core/models/catalogo.model';
 
 /**

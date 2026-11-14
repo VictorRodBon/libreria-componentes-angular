@@ -10,17 +10,17 @@ type DemoLoader = () => Promise<Type<unknown>>;
  */
 const DEMOS: Record<string, DemoLoader> = {
   'button-primary': () =>
-    import('../../shared/button/demos/button-primary.demo').then((m) => m.ButtonPrimaryDemo),
+    import('../../shared/examples/button/demos/button-primary.demo').then((m) => m.ButtonPrimaryDemo),
   'button-secondary': () =>
-    import('../../shared/button/demos/button-secondary.demo').then((m) => m.ButtonSecondaryDemo),
+    import('../../shared/examples/button/demos/button-secondary.demo').then((m) => m.ButtonSecondaryDemo),
   'card-basic': () =>
-    import('../../shared/card/demos/card-basic.demo').then((m) => m.CardBasicDemo),
+    import('../../shared/examples/card/demos/card-basic.demo').then((m) => m.CardBasicDemo),
   'badge-status': () =>
-    import('../../shared/badge/demos/badge-status.demo').then((m) => m.BadgeStatusDemo),
+    import('../../shared/examples/badge/demos/badge-status.demo').then((m) => m.BadgeStatusDemo),
   'spinner-loading': () =>
-    import('../../shared/spinner/demos/spinner-loading.demo').then((m) => m.SpinnerLoadingDemo),
+    import('../../shared/examples/spinner/demos/spinner-loading.demo').then((m) => m.SpinnerLoadingDemo),
   'alert-success': () =>
-    import('../../shared/alert/demos/alert-success.demo').then((m) => m.AlertSuccessDemo),
+    import('../../shared/examples/alert/demos/alert-success.demo').then((m) => m.AlertSuccessDemo),
 };
 
 @Injectable({ providedIn: 'root' })
