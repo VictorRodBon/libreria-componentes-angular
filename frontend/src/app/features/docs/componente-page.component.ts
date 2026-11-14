@@ -6,9 +6,7 @@ import { DemoHostComponent } from '../../shared/components/demo-host/demo-host.c
 import { Componente } from '../../core/models/componente.model';
 import { ComponenteService } from '../../core/services/componente.service';
 
-import { BtnAtras } from '../../shared/components/btn-atras/btn-atras';
-
-type Lenguaje = 'html' | 'ts' | 'css';
+type Lenguaje = 'html' | 'ts';
 
 /**
  * Página de detalle de un componente.
@@ -32,7 +30,7 @@ export class ComponentePageComponent {
   private readonly componenteService = inject(ComponenteService);
   readonly componente = signal<Componente | null>(null);
 
-  /** Pestaña activa (HTML / TypeScript) de cada ejemplo, por posición. */
+  /** Pestaña activa (HTML / TypeScript / CSS) de cada ejemplo, por posición. */
   private readonly tabs = signal<Record<number, Lenguaje>>({});
   /** Posición del ejemplo cuyo código se acaba de copiar. */
   readonly copiado = signal<number | null>(null);
@@ -56,14 +54,15 @@ export class ComponentePageComponent {
     this.tabs.update((t) => ({ ...t, [indice]: lenguaje }));
   }
 
-  codigoDe(ejemplo: Componente['ejemplos'][number], indice: number): string {
-    switch (this.tabDe(indice)) {
-      case 'html':
-        return ejemplo.codigo_html;
-      case 'ts':
-        return ejemplo.codigo_ts;
-      case 'css':
-        return ejemplo.codigo_css ?? '';
+  codigoDe(ejemplo: Componente['ejemplos'][number], indice: number) {
+    let codigo:string = "";
+    
+    if(this.tabDe(indice)==="html"){
+      return ejemplo.codigo_html;
+    }else if(this.tabDe(indice)==="ts"){
+      return ejemplo.codigo_ts;
+    }else{
+      return ejemplo.codigo_css;
     }
   }
 

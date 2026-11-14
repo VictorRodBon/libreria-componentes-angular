@@ -4,25 +4,14 @@ export interface Usuario {
   email: string;
 }
 
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-export interface RegisterRequest {
-  nombre: string;
-  email: string;
-  password: string;
-}
-
-export interface LoginResponse {
+export interface LoginRespuesta {
   success: boolean;
   message: string;
   token: string;
   data: Usuario;
 }
 
-export interface RegisterResponse {
+export interface RegistroRespuesta {
   success: boolean;
   message: string;
   data: Usuario;
