@@ -7,6 +7,12 @@ import { CategoriaConComponentes } from '../models/catalogo.model';
 import { Categoria } from '../models/componente.model';
 import { Favorito } from '../models/favorito.model';
 
+/**
+ * Pide el catálogo al backend.
+ *
+ * La API envuelve sus respuestas en { success, data }; este servicio devuelve
+ * solo `data`, para que las páginas trabajen directamente con los datos.
+ */
 @Injectable({ providedIn: 'root' })
 export class CatalogService {
   private readonly http = inject(HttpClient);

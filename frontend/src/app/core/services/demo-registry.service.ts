@@ -13,12 +13,14 @@ const DEMOS: Record<string, DemoLoader> = {
     import('../../shared/button/demos/button-primary.demo').then((m) => m.ButtonPrimaryDemo),
   'button-secondary': () =>
     import('../../shared/button/demos/button-secondary.demo').then((m) => m.ButtonSecondaryDemo),
-    'card-basic': () =>
+  'card-basic': () =>
     import('../../shared/card/demos/card-basic.demo').then((m) => m.CardBasicDemo),
-      'badge-status': () =>
+  'badge-status': () =>
     import('../../shared/badge/demos/badge-status.demo').then((m) => m.BadgeStatusDemo),
-        'spinner-loading': () =>
+  'spinner-loading': () =>
     import('../../shared/spinner/demos/spinner-loading.demo').then((m) => m.SpinnerLoadingDemo),
+  'alert-success': () =>
+    import('../../shared/alert/demos/alert-success.demo').then((m) => m.AlertSuccessDemo),
 };
 
 @Injectable({ providedIn: 'root' })

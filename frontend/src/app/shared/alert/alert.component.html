@@ -1,0 +1,16 @@
+@if (visible()) {
+  <div [class]="'alert alert-' + type()" role="alert">
+    <div class="alert-content">
+      @if (titulo()) {
+        <p class="alert-title">{{ titulo() }}</p>
+      }
+      <div class="alert-message">
+        <ng-content></ng-content>
+      </div>
+    </div>
+
+    @if (cerrable()) {
+      <button class="alert-close" type="button" aria-label="Cerrar" (click)="close()">×</button>
+    }
+  </div>
+}
