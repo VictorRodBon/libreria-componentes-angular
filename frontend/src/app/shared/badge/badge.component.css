@@ -1,0 +1,53 @@
+:host {
+  display: inline-block;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Cada color define su tono (--c) y su fondo suave (--c-bg). */
+.badge-neutral {
+  --c: var(--text-2, #8b9a95);
+  --c-bg: rgba(139, 154, 149, 0.14);
+}
+.badge-success {
+  --c: var(--accent, #1fe39b);
+  --c-bg: var(--accent-dim, rgba(31, 227, 155, 0.12));
+}
+.badge-warning {
+  --c: #f5b942;
+  --c-bg: rgba(245, 185, 66, 0.12);
+}
+.badge-danger {
+  --c: #ff7a7a;
+  --c-bg: rgba(255, 122, 122, 0.12);
+}
+.badge-info {
+  --c: #5aa9ff;
+  --c-bg: rgba(90, 169, 255, 0.12);
+}
+
+/* Variantes: usan el tono del color elegido. */
+.badge-subtle {
+  background: var(--c-bg);
+  color: var(--c);
+}
+.badge-solid {
+  background: var(--c);
+  color: var(--accent-ink, #04130d);
+}
+.badge-outline {
+  border-color: var(--c);
+  background: transparent;
+  color: var(--c);
+}
