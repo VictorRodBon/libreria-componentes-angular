@@ -5,12 +5,16 @@ import { AuthService } from '../services/auth.service';
 /**
  * Guard de rutas privadas.
  *
- * Deja pasar si hay sesión iniciada; si no, redirige a la página de inicio.
+ * Deja pasar si hay sesión iniciada; si no, redirige al login
+ * y recuerda a dónde quería ir el usuario.
  * Uso en app.routes.ts: `canActivate: [authGuard]`.
  */
-export const authGuard: CanActivateFn = () => {
+export const authGuard: CanActivateFn = (_route, state) => {
   const auth = inject(AuthService);
-  const router = inject(Router);
-
-  return auth.isLoggedIn() ? true : router.createUrlTree(['/']);
+  if (auth.estaAutenticado()) {
+    return true;
+  }
+  return inject(Router).createUrlTree(['/login'], {
+    queryParams: { returnUrl: state.url },
+  });
 };

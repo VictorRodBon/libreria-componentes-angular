@@ -1,0 +1,16 @@
+@for (cat of categorias(); track cat.slug) {
+<section class="categoria" >
+    <h2>
+        <a [routerLink]="['/categoria', cat.slug]">{{ cat.nombre }}</a>
+    </h2>
+    <p>{{ cat.descripcion }}</p>
+
+    <div class="grid">
+        @for (comp of cat.componentes; track comp.selector) {
+        <app-card-componente [componente]="comp" [categoriaSlug]="cat.slug" />
+        }
+    </div>
+</section>
+} @empty {
+<p>Cargando catálogo… (o no hay resultados)</p>
+}

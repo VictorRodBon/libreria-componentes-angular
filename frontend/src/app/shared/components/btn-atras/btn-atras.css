@@ -1,0 +1,33 @@
+:host {
+  display: inline-block;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 12px;
+  border: 1px solid var(--border-strong, #2b3833);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-2, #8b9a95);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+button::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-left: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+
+button:hover {
+  border-color: var(--text-2, #8b9a95);
+  background: var(--surface-2, #151d1a);
+  color: var(--text, #eaf1ee);
+}

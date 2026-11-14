@@ -1,5 +1,15 @@
 import { ComponenteModel } from '../models/componente.model.js';
 
+export const obtenerCategorias = async (req, res) => {
+  try {
+    const categorias = await ComponenteModel.obtenerCategorias();
+    res.json({ success: true, data: categorias });
+  } catch (error) {
+    console.error('Error al obtener las categorías:', error);
+    res.status(500).json({ success: false, error: 'Error interno del servidor al consultar las categorías' });
+  }
+}
+
 export const obtenerCatalogo = async (req, res) => {
   try{
     const catalogo = await ComponenteModel.obtenerCatalogoCompleto();
