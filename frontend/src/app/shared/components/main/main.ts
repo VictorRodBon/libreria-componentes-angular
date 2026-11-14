@@ -4,9 +4,10 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { CatalogService } from '../../../core/services/catalog.service';
 import { CategoriaConComponentes } from '../../../core/models/catalogo.model';
+import { CardComponente } from '../card-componente/card-componente';
 
 @Component({
-  imports: [RouterLink],
+  imports: [RouterLink, CardComponente],
   selector: 'app-main',
   styleUrl: './main.css',
   templateUrl: './main.html',

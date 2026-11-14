@@ -1,0 +1,19 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 16px;
+}
+
+.categoria + .categoria {
+  margin-top: 40px;
+}
+
+.categoria h2 {
+  margin: 0 0 4px;
+}
+
+.categoria p {
+  margin: 0 0 16px;
+  color: var(--text-2);
+}

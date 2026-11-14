@@ -1,8 +1,12 @@
 :host {
   display: block;
+  height: 100%;
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
   border: 1px solid var(--border-strong, #2b3833);
   border-radius: 12px;
@@ -27,6 +31,7 @@
 }
 
 .card-body {
+  flex: 1;
   padding: 16px 20px;
   font-size: 0.9375rem;
   line-height: 1.5;

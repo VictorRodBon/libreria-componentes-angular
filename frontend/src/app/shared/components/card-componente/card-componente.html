@@ -1,0 +1,15 @@
+<app-card
+  [titulo]="componente().nombre"
+  [subtitulo]="componente().selector"
+>
+  <p class="descripcion">{{ componente().descripcion }}</p>
+  <span class="contador">{{ componente().ejemplos.length }} ejemplos</span>
+
+  <a
+    footer
+    class="enlace"
+    [routerLink]="['/docs', categoriaSlug(), componente().selector]"
+  >
+    Ver componente →
+  </a>
+</app-card>

@@ -5,15 +5,11 @@
     </h2>
     <p>{{ cat.descripcion }}</p>
 
-    <ul>
+    <div class="grid">
         @for (comp of cat.componentes; track comp.selector) {
-        <li>
-            <a [routerLink]="['/docs', cat.slug, comp.selector]">
-                {{ comp.nombre }}
-            </a>
-        </li>
+        <app-card-componente [componente]="comp" [categoriaSlug]="cat.slug" />
         }
-    </ul>
+    </div>
 </section>
 } @empty {
 <p>Cargando catálogo… (o no hay resultados)</p>
