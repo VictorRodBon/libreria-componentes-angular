@@ -69,3 +69,19 @@ input {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+.fade-in {
+  animation: aparecer 300ms ease-out forwards;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
