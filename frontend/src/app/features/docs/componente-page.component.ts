@@ -6,7 +6,7 @@ import { DemoHostComponent } from '../../shared/demo-host/demo-host.component';
 import { Componente } from '../../core/models/componente.model';
 import { ComponenteService } from '../../core/services/componente.service';
 
-type Lenguaje = 'html' | 'ts';
+type Lenguaje = 'html' | 'ts' | 'css';
 
 /**
  * Página de detalle de un componente.
@@ -293,7 +293,7 @@ export class ComponentePageComponent {
     }else if(this.tabDe(indice)==="ts"){
       return ejemplo.codigo_ts;
     }else{
-      return ejemplo.codigo_css;
+      return ejemplo.codigo_css ?? '';
     }
   }
 
