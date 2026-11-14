@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { tap } from 'rxjs';
+import { API_URL } from '../api.config';
 import { LoginRespuesta, RegistroRespuesta, Usuario } from '../models/auth.model';
 
-// Usa la misma base que ComponenteService (con proxy: '/api/auth'; sin proxy: 'http://localhost:PUERTO/api/auth')
-const API = '/api/auth';
+const API = `${API_URL}/auth`;
 const CLAVE_TOKEN = 'auth_token';
 const CLAVE_USUARIO = 'auth_usuario';
 
