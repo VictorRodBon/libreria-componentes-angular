@@ -41,6 +41,14 @@ const buscarCategoriaPorSlug = async (slug) => {
 };
 
 export const ComponenteModel = {
+  // Categorías sin componentes (para menús / filtros)
+  async obtenerCategorias() {
+    const [rows] = await pool.query(
+      'SELECT id, nombre, slug, descripcion FROM categorias ORDER BY id'
+    );
+    return rows;
+  },
+
   // Obtener todo el catálogo agrupado
   async obtenerCatalogoCompleto() {
     const [[categorias], [componentes], [ejemplos]] = await Promise.all([
