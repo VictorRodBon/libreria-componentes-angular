@@ -5,6 +5,12 @@ import { API_URL } from '../api.config';
 import { ApiResponse } from '../models/api-response.model';
 import { CategoriaConComponentes } from '../models/catalogo.model';
 
+/**
+ * Pide el catálogo al backend.
+ *
+ * La API envuelve sus respuestas en { success, data }; este servicio devuelve
+ * solo `data`, para que las páginas trabajen directamente con los datos.
+ */
 @Injectable({ providedIn: 'root' })
 export class CatalogService {
   private readonly http = inject(HttpClient);

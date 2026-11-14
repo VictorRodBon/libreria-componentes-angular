@@ -94,7 +94,7 @@ frontend/src/app/
 │   └── services/         # CatalogService, ComponenteService, AuthService, DemoRegistry
 ├── features/             # Páginas de la aplicación
 └── shared/               # Componentes reutilizables y sus demos
-    ├── button/  card/  badge/  spinner/
+    ├── button/  card/  badge/  spinner/  alert/
     ├── code-block/       # Muestra código como texto
     └── demo-host/        # Carga dinámicamente la demo de cada ejemplo
 ```
@@ -153,6 +153,37 @@ El contenido va en el cuerpo. Lo que lleve el atributo `footer` se proyecta en e
 
 ```html
 <app-spinner size="lg" color="primary"></app-spinner>
+```
+
+### `app-alert`
+
+| Propiedad | Valores | Por defecto |
+|---|---|---|
+| `type` | `info`, `success`, `warning`, `danger` | `info` |
+| `titulo` | texto | vacío |
+| `cerrable` | `true`, `false` | `false` |
+
+| Evento | Cuándo se emite |
+|---|---|
+| `dismissed` | Al cerrarse la alerta (botón de cerrar o método `close()`) |
+
+| Método | Qué hace |
+|---|---|
+| `close()` | Oculta la alerta y emite `dismissed` |
+
+```html
+<app-alert type="success" titulo="Guardado" [cerrable]="true" (dismissed)="alCerrar()">
+  Los cambios se han guardado correctamente.
+</app-alert>
+```
+
+## Pruebas unitarias
+
+Cada componente tiene su fichero `.spec.ts` al lado (Vitest + TestBed). Comprueban los valores por defecto, que cada propiedad cambia lo que se pinta y, en `app-alert`, que el evento `dismissed` se emite. `AuthService` se prueba con `HttpTestingController`, sin necesidad de backend.
+
+```bash
+cd frontend
+ng test --watch=false
 ```
 
 ## Cómo funciona el catálogo

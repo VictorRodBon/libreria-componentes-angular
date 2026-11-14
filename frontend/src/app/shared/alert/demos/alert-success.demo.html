@@ -1,0 +1,36 @@
+<div class="demo">
+  <div class="stage">
+    @if (mostrada()) {
+      <app-alert
+        [type]="type()"
+        titulo="¡Operación exitosa!"
+        [cerrable]="cerrable()"
+        (dismissed)="alCerrar()">
+        Los cambios se han guardado correctamente.
+      </app-alert>
+    } @else {
+      <app-button color="secondary" (click)="mostrada.set(true)">Mostrar de nuevo</app-button>
+    }
+  </div>
+
+  <div class="controls">
+    <label>
+      Tipo:
+      <select (change)="type.set(asType($any($event.target).value))">
+        @for (t of tipos; track t) {
+          <option [value]="t" [selected]="t === type()">{{ t }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      <input
+        type="checkbox"
+        [checked]="cerrable()"
+        (change)="cerrable.set($any($event.target).checked)">
+      Cerrable
+    </label>
+
+    <span>Evento dismissed emitido: {{ cierres() }}</span>
+  </div>
+</div>
