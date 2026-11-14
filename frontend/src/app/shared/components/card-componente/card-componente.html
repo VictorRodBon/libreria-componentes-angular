@@ -3,7 +3,9 @@
   [subtitulo]="componente().selector"
 >
   <p class="descripcion">{{ componente().descripcion }}</p>
-  <span class="contador">{{ componente().ejemplos.length }} ejemplos</span>
+  @if (componente().ejemplos; as ejemplos) {
+  <span class="contador">{{ ejemplos.length }} ejemplos</span>
+  }
 
   <a
     footer

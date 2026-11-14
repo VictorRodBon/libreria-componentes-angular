@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { API_URL } from '../api.config';
 import { ApiResponse } from '../models/api-response.model';
 import { CategoriaConComponentes } from '../models/catalogo.model';
+import { Favorito } from '../models/favorito.model';
 
 @Injectable({ providedIn: 'root' })
 export class CatalogService {
@@ -20,6 +21,11 @@ export class CatalogService {
   getCategoria(slug: string): Observable<CategoriaConComponentes> {
     return this.http
       .get<ApiResponse<CategoriaConComponentes>>(`${API_URL}/componentes/catalogo/${slug}`)
+      .pipe(map((res) => res.data));
+  }
+  getFavoritos(): Observable<Favorito[]> {
+    return this.http
+      .get<ApiResponse<Favorito[]>>(`${API_URL}/favoritos`)
       .pipe(map((res) => res.data));
   }
 }
