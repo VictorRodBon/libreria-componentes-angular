@@ -1,58 +1,92 @@
-import { HttpClient } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
-import { Observable, tap } from 'rxjs';
-import { API_URL } from '../api.config';
-import {
-  LoginRequest,
-  LoginResponse,
-  RegisterRequest,
-  RegisterResponse,
-  Usuario,
-} from '../models/auth.model';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { tap } from 'rxjs';
+import { LoginRespuesta, RegistroRespuesta, Usuario } from '../models/auth.model';
 
-const TOKEN_KEY = 'auth_token';
-const USUARIO_KEY = 'auth_usuario';
+// Usa la misma base que ComponenteService (con proxy: '/api/auth'; sin proxy: 'http://localhost:PUERTO/api/auth')
+const API = '/api/auth';
+const CLAVE_TOKEN = 'auth_token';
+const CLAVE_USUARIO = 'auth_usuario';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
 
-  private readonly tokenSignal = signal<string | null>(localStorage.getItem(TOKEN_KEY));
-  private readonly usuarioSignal = signal<Usuario | null>(this.leerUsuarioGuardado());
+  private readonly _token = signal<string | null>(null);
+  private readonly _usuario = signal<Usuario | null>(null);
 
-  readonly usuario = this.usuarioSignal.asReadonly();
-  readonly isLoggedIn = computed(() => this.tokenSignal() !== null);
+  readonly token = this._token.asReadonly();
+  readonly usuario = this._usuario.asReadonly();
+  readonly estaAutenticado = computed(() => this._token() !== null);
 
-  get token(): string | null {
-    return this.tokenSignal();
+  constructor() {
+    this.restaurarSesion();
   }
 
-  register(datos: RegisterRequest): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>(`${API_URL}/auth/register`, datos);
+  registro(nombre: string, email: string, password: string) {
+    return this.http.post<RegistroRespuesta>(`${API}/register`, { nombre, email, password });
   }
 
-  login(datos: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${API_URL}/auth/login`, datos).pipe(
-      tap((res) => this.guardarSesion(res.token, res.data)),
-    );
+  login(email: string, password: string) {
+    return this.http
+      .post<LoginRespuesta>(`${API}/login`, { email, password })
+      .pipe(tap((respuesta) => this.guardarSesion(respuesta.token, respuesta.data)));
   }
 
   logout(): void {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USUARIO_KEY);
-    this.tokenSignal.set(null);
-    this.usuarioSignal.set(null);
+    this._token.set(null);
+    this._usuario.set(null);
+    try {
+      localStorage.removeItem(CLAVE_TOKEN);
+      localStorage.removeItem(CLAVE_USUARIO);
+    } catch {
+      // Sin acceso a localStorage: la sesión en memoria ya está cerrada.
+    }
   }
 
   private guardarSesion(token: string, usuario: Usuario): void {
-    localStorage.setItem(TOKEN_KEY, token);
-    localStorage.setItem(USUARIO_KEY, JSON.stringify(usuario));
-    this.tokenSignal.set(token);
-    this.usuarioSignal.set(usuario);
+    this._token.set(token);
+    this._usuario.set(usuario);
+    try {
+      localStorage.setItem(CLAVE_TOKEN, token);
+      localStorage.setItem(CLAVE_USUARIO, JSON.stringify(usuario));
+    } catch {
+      // Sin acceso a localStorage: la sesión dura hasta recargar la página.
+    }
   }
 
-  private leerUsuarioGuardado(): Usuario | null {
-    const guardado = localStorage.getItem(USUARIO_KEY);
-    return guardado ? (JSON.parse(guardado) as Usuario) : null;
+  private restaurarSesion(): void {
+    try {
+      const token = localStorage.getItem(CLAVE_TOKEN);
+      const usuario = localStorage.getItem(CLAVE_USUARIO);
+      if (token && usuario && !this.tokenCaducado(token)) {
+        this._token.set(token);
+        this._usuario.set(JSON.parse(usuario) as Usuario);
+      } else {
+        this.logout();
+      }
+    } catch {
+      this.logout();
+    }
   }
+
+  private tokenCaducado(token: string): boolean {
+    try {
+      const payload = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+      const { exp } = JSON.parse(atob(payload)) as { exp?: number };
+      return !exp || exp * 1000 <= Date.now();
+    } catch {
+      return true;
+    }
+  }
+}
+
+/** Convierte un error HTTP del backend en un mensaje para mostrar al usuario. */
+export function mensajeError(err: unknown): string {
+  if (err instanceof HttpErrorResponse) {
+    if (err.status === 0) return 'No se puede conectar con el servidor.';
+    if (typeof err.error?.error === 'string') return err.error.error;
+    if (err.status === 400) return 'Revisa los datos del formulario.';
+  }
+  return 'Ha ocurrido un error. Inténtalo de nuevo.';
 }

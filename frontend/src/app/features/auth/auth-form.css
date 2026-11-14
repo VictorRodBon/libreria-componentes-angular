@@ -1,0 +1,91 @@
+:host {
+  display: block;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: clamp(40px, 8vw, 88px) clamp(16px, 4vw, 32px) 96px;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.sub {
+  margin: 0 0 32px;
+  color: var(--text-2);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  margin-top: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+input {
+  padding: 10px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+input.invalido {
+  border-color: #dc2626;
+}
+
+.campo-error {
+  margin: 0;
+  color: #dc2626;
+  font-size: 0.8125rem;
+}
+
+.error {
+  margin: 16px 0 0;
+  padding: 10px 12px;
+  border: 1px solid #dc2626;
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 0.875rem;
+}
+
+button[type='submit'] {
+  margin-top: 24px;
+  padding: 11px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button[type='submit']:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.alternativa {
+  margin: 24px 0 0;
+  color: var(--text-2);
+  font-size: 0.875rem;
+}
+
+.alternativa a {
+  color: var(--accent);
+}
