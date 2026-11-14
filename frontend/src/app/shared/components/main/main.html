@@ -1,0 +1,20 @@
+@for (cat of categorias(); track cat.slug) {
+<section class="categoria">
+    <h2>
+        <a [routerLink]="['/categoria', cat.slug]">{{ cat.nombre }}</a>
+    </h2>
+    <p>{{ cat.descripcion }}</p>
+
+    <ul>
+        @for (comp of cat.componentes; track comp.selector) {
+        <li>
+            <a [routerLink]="['/docs', cat.slug, comp.selector]">
+                {{ comp.nombre }}
+            </a>
+        </li>
+        }
+    </ul>
+</section>
+} @empty {
+<p>Cargando catálogo… (o no hay resultados)</p>
+}

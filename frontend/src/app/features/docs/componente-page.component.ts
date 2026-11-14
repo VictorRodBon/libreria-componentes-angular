@@ -6,7 +6,7 @@ import { DemoHostComponent } from '../../shared/demo-host/demo-host.component';
 import { Componente } from '../../core/models/componente.model';
 import { ComponenteService } from '../../core/services/componente.service';
 
-type Lenguaje = 'html' | 'ts';
+type Lenguaje = 'html' | 'ts' | 'css';
 
 /**
  * Página de detalle de un componente.
@@ -285,15 +285,14 @@ export class ComponentePageComponent {
     this.tabs.update((t) => ({ ...t, [indice]: lenguaje }));
   }
 
-  codigoDe(ejemplo: Componente['ejemplos'][number], indice: number) {
-    let codigo:string = "";
-    
-    if(this.tabDe(indice)==="html"){
-      return ejemplo.codigo_html;
-    }else if(this.tabDe(indice)==="ts"){
-      return ejemplo.codigo_ts;
-    }else{
-      return ejemplo.codigo_css;
+  codigoDe(ejemplo: Componente['ejemplos'][number], indice: number): string {
+    switch (this.tabDe(indice)) {
+      case 'html':
+        return ejemplo.codigo_html;
+      case 'ts':
+        return ejemplo.codigo_ts;
+      case 'css':
+        return ejemplo.codigo_css ?? '';
     }
   }
 

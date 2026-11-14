@@ -1,6 +1,15 @@
 import { Routes } from '@angular/router';
+import { Main } from './shared/components/main/main';
 
 export const routes: Routes = [
+  {
+    path:"",
+    component:Main
+  },
+  {
+    path: 'categoria/:categoriaSlug',
+    component: Main,
+  },
   {
     path: 'docs/:categoriaSlug/:selector',
     loadComponent: () =>
