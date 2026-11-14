@@ -1,0 +1,55 @@
+:host {
+  display: inline-block;
+  line-height: 0;
+}
+
+.spinner {
+  display: inline-block;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: var(--border-strong, #2b3833);
+  border-top-color: var(--c);
+  border-radius: 50%;
+  animation: giro 0.7s linear infinite;
+}
+
+/* Tamaños */
+.spinner-sm {
+  width: 16px;
+  height: 16px;
+  border-width: 2px;
+}
+.spinner-md {
+  width: 24px;
+  height: 24px;
+  border-width: 3px;
+}
+.spinner-lg {
+  width: 40px;
+  height: 40px;
+  border-width: 4px;
+}
+
+/* Colores */
+.spinner-primary {
+  --c: var(--accent, #1fe39b);
+}
+.spinner-neutral {
+  --c: var(--text-2, #8b9a95);
+}
+.spinner-danger {
+  --c: #ff7a7a;
+}
+
+@keyframes giro {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Para quien prefiere menos movimiento: giro más lento. */
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2s;
+  }
+}
