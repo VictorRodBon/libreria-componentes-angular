@@ -11,7 +11,7 @@ const agruparPor = (filas, clave) => {
   return mapa;
 };
 
-const CAMPOS_EJEMPLO = 'id, componente_id, titulo, codigo_html, codigo_ts, demo_key, orden';
+const CAMPOS_EJEMPLO = 'id, componente_id, titulo, codigo_html, codigo_ts, codigo_css, demo_key, orden';
 
 // Normaliza un ejemplo: demo_key siempre presente (string o null)
 const mapearEjemplo = (ejemplo) => ({
@@ -19,6 +19,7 @@ const mapearEjemplo = (ejemplo) => ({
   titulo: ejemplo.titulo,
   codigo_html: ejemplo.codigo_html,
   codigo_ts: ejemplo.codigo_ts,
+  codigo_css: ejemplo.codigo_css ?? null,
   demo_key: ejemplo.demo_key ?? null,
   orden: ejemplo.orden
 });

@@ -9,6 +9,7 @@ export interface Ejemplo {
   titulo: string;
   codigo_html: string;
   codigo_ts: string;
+  codigo_css: string | null;
   demo_key: string | null;
   orden: number;
 }
