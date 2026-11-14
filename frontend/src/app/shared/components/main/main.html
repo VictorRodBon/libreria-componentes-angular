@@ -1,5 +1,5 @@
 @for (cat of categorias(); track cat.slug) {
-<section class="categoria">
+<section class="categoria" >
     <h2>
         <a [routerLink]="['/categoria', cat.slug]">{{ cat.nombre }}</a>
     </h2>

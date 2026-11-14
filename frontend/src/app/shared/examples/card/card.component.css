@@ -12,6 +12,16 @@
   border-radius: 12px;
   background: var(--surface, #101614);
   color: var(--text, #eaf1ee);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.card:hover {
+  border-color: var(--accent-line, rgba(31, 227, 155, 0.3));
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
 }
 
 .card-header {

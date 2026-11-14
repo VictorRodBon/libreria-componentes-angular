@@ -1,6 +1,7 @@
 <app-card
   [titulo]="componente().nombre"
   [subtitulo]="componente().selector"
+  animate.enter="fade-in"
 >
   <p class="descripcion">{{ componente().descripcion }}</p>
   @if (componente().ejemplos; as ejemplos) {

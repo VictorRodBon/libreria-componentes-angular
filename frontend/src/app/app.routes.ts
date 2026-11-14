@@ -3,6 +3,7 @@ import { Main } from './shared/components/main/main';
 import { Favoritos } from './shared/components/favoritos/favoritos';
 import { Layout } from './shared/components/layout/layout';
 import { authGuard } from './core/guards/auth.guard';
+import { Inicio } from './shared/components/inicio/inicio';
 
 export const routes: Routes = [
   {
@@ -11,6 +12,10 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        component: Inicio,
+      },
+      {
+        path: 'categoria',
         component: Main,
       },
       {
