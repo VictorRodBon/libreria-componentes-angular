@@ -1,0 +1,11 @@
+<div class="demo-host">
+  @if (loading()) {
+    <p class="estado">Cargando demo…</p>
+  } @else if (error()) {
+    <p class="estado error">{{ error() }}</p>
+  } @else {
+    @if (component(); as comp) {
+      <ng-container [ngComponentOutlet]="comp"></ng-container>
+    }
+  }
+</div>

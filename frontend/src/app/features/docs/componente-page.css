@@ -1,0 +1,178 @@
+:host {
+    display: block;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: clamp(40px, 8vw, 88px) clamp(16px, 4vw, 32px) 96px;
+}
+
+/* ---------- Cabecera ---------- */
+.volver {
+    display: block;
+    margin-bottom: 28px;
+}
+
+.page-header {
+    margin-bottom: 56px;
+}
+
+.categoria {
+    margin: 0 0 12px;
+    color: var(--accent);
+    font-size: 0.9375rem;
+    font-weight: 500;
+}
+
+h1 {
+    margin: 0 0 16px;
+    font-size: clamp(2.25rem, 5vw, 3rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+}
+
+.descripcion {
+    max-width: 60ch;
+    margin: 0 0 20px;
+    color: var(--text-2);
+    font-size: 1.125rem;
+}
+
+.selector {
+    display: inline-block;
+    padding: 2px 8px;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text-2);
+    font: 400 0.8125rem/1.6 var(--font-mono);
+}
+
+/* ---------- Ejemplos ---------- */
+h2 {
+    margin: 0 0 32px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+.ejemplo+.ejemplo {
+    margin-top: 56px;
+}
+
+h3 {
+    margin: 0 0 16px;
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+.sin-demo,
+.vacio {
+    margin: 0;
+    color: var(--text-2);
+}
+
+.sin-demo {
+    padding: 20px;
+    border: 1px dashed var(--border-strong);
+    border-radius: 12px;
+}
+
+/* ---------- Ver código ---------- */
+details {
+    margin-top: 8px;
+}
+
+summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    color: var(--text-2);
+    font-size: 0.875rem;
+    cursor: pointer;
+    list-style: none;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform 0.15s;
+}
+
+details[open]>summary::before {
+    transform: rotate(45deg);
+}
+
+summary:hover {
+    color: var(--text);
+}
+
+.code {
+    overflow: hidden;
+    margin-top: 8px;
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    background: var(--surface);
+}
+
+.code__bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.code__tabs {
+    display: flex;
+    gap: 4px;
+}
+
+.code__tabs button {
+    margin-bottom: -1px;
+    padding: 11px 10px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: var(--text-2);
+    font-size: 0.8125rem;
+    cursor: pointer;
+}
+
+.code__tabs button:hover {
+    color: var(--text);
+}
+
+.code__tabs button.is-on {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+.code__copy {
+    margin-left: auto;
+    padding: 4px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: none;
+    color: var(--text-2);
+    font-size: 0.8125rem;
+    cursor: pointer;
+}
+
+.code__copy:hover {
+    color: var(--text);
+}
+
+/* El bloque de código va dentro de .code, que ya pone el borde y el radio */
+app-code-block {
+    --code-border: 0;
+    --code-radius: 0;
+}

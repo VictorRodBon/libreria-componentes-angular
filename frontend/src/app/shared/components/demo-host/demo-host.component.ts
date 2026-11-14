@@ -7,7 +7,7 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { DemoRegistry } from '../../core/services/demo-registry.service';
+import { DemoRegistry } from '../../../core/services/demo-registry.service';
 
 /**
  * Recibe un demo_key, resuelve la demo en el registro y la instancia
@@ -16,38 +16,8 @@ import { DemoRegistry } from '../../core/services/demo-registry.service';
 @Component({
   selector: 'app-demo-host',
   imports: [NgComponentOutlet],
-  template: `
-    <div class="demo-host">
-      @if (loading()) {
-        <p class="estado">Cargando demo…</p>
-      } @else if (error()) {
-        <p class="estado error">{{ error() }}</p>
-      } @else {
-        @if (component(); as comp) {
-          <ng-container [ngComponentOutlet]="comp"></ng-container>
-        }
-      }
-    </div>
-  `,
-  styles: `
-    .demo-host {
-      min-height: 4rem;
-    }
-    .estado {
-      margin: 0;
-      padding: 20px;
-      border: 1px dashed var(--border-strong, #2b3833);
-      border-radius: 12px;
-      color: var(--text-2, #8b9a95);
-      font-size: 0.9375rem;
-    }
-    .error {
-      border-style: solid;
-      border-color: rgba(255, 122, 122, 0.35);
-      background: rgba(255, 122, 122, 0.08);
-      color: #ff7a7a;
-    }
-  `,
+  templateUrl: `./demo-host.html`,
+  styleUrl: `./demo-host.css`,
 })
 export class DemoHostComponent implements OnChanges {
   readonly demoKey = input.required<string>();

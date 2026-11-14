@@ -223,7 +223,7 @@ FROM (
                  1, 'pagination-basic'
 
     UNION ALL SELECT 'app-alert', 'Alerta de éxito', 
-                 '<app-alert type="success" title="¡Operación exitosa!" message="Los cambios se han guardado en la base de datos correctamente."></app-alert>', 
+                 '<app-alert type="success" titulo="¡Operación exitosa!">Los cambios se han guardado en la base de datos correctamente.</app-alert>', 
                  'import { Component } from ''@angular/core'';\n\n@Component({\n  selector: ''app-alert-example'',\n  templateUrl: ''./alert-example.component.html''\n})\nexport class AlertExampleComponent {}' AS codigo_ts,
                  'app-alert {\n  display: block;\n  margin-bottom: 1rem;\n}' AS codigo_css, 
                  1, 'alert-success'
