@@ -1,0 +1,33 @@
+<div class="demo">
+  <div class="stage">
+    <app-badge [color]="color()" [variant]="variant()">{{ texto() }}</app-badge>
+  </div>
+
+  <div class="controls">
+    <label>
+      Color:
+      <select (change)="color.set(asColor($any($event.target).value))">
+        @for (c of colores; track c) {
+          <option [value]="c" [selected]="c === color()">{{ c }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      Variante:
+      <select (change)="variant.set(asVariant($any($event.target).value))">
+        @for (v of variantes; track v) {
+          <option [value]="v" [selected]="v === variant()">{{ v }}</option>
+        }
+      </select>
+    </label>
+
+    <label>
+      Texto:
+      <input
+        type="text"
+        [value]="texto()"
+        (input)="texto.set($any($event.target).value)">
+    </label>
+  </div>
+</div>
