@@ -69,6 +69,15 @@ type Lenguaje = 'html' | 'ts';
                     >
                       TypeScript
                     </button>
+                    <button
+                      type="button"
+                      role="tab"
+                      [attr.aria-selected]="tabDe(i) === 'css'"
+                      [class.is-on]="tabDe(i) === 'css'"
+                      (click)="elegirTab(i, 'css')"
+                    >
+                      CSS
+                    </button>
                   </div>
                   <button
                     type="button"
@@ -277,7 +286,15 @@ export class ComponentePageComponent {
   }
 
   codigoDe(ejemplo: Componente['ejemplos'][number], indice: number) {
-    return this.tabDe(indice) === 'html' ? ejemplo.codigo_html : ejemplo.codigo_ts;
+    let codigo:string = "";
+    
+    if(this.tabDe(indice)==="html"){
+      return ejemplo.codigo_html;
+    }else if(this.tabDe(indice)==="ts"){
+      return ejemplo.codigo_ts;
+    }else{
+      return ejemplo.codigo_css;
+    }
   }
 
   async copiar(indice: number, codigo: string): Promise<void> {

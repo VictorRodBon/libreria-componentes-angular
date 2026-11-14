@@ -21,6 +21,7 @@ export const MOCK_COMPONENTE: Componente = {
       titulo: 'Botón primario',
       codigo_html: '<app-button color="primary">Guardar</app-button>',
       codigo_ts: 'export class ButtonExample {}',
+      codigo_css: 'export class ButtonExample {}',
       demo_key: 'button-primary',
       orden: 1,
     },
@@ -30,6 +31,7 @@ export const MOCK_COMPONENTE: Componente = {
       codigo_html:
         '<app-button color="secondary" [disabled]="true">Cancelar</app-button>',
       codigo_ts: 'export class ButtonExample { disabled = true; }',
+      codigo_css: 'export class ButtonExample { disabled = true; }',
       demo_key: 'button-secondary',
       orden: 2,
     },
