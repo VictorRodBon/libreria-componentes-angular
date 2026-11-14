@@ -1,1 +1,184 @@
-# libreria-componentes-angular
+# Catálogo de componentes Angular
+
+Aplicación web que muestra un catálogo de componentes Angular reutilizables. Cada componente tiene su página con descripción, **demo interactiva** (con controles para cambiar sus propiedades en vivo) y **código de ejemplo** (HTML, TypeScript y CSS).
+
+Proyecto de clase de 2º DAM (Ampliación de desarrollo de interfaces) realizado en equipo.
+
+## Qué incluye
+
+- **Frontend** en Angular 22 (componentes *standalone*, signals, Angular Router).
+- **Backend** en Node.js + Express que sirve el catálogo y gestiona usuarios (registro, login con JWT) y favoritos.
+- **Base de datos** MariaDB en Docker, con el catálogo cargado desde `backend/init.sql`.
+
+## Requisitos previos
+
+- [Node.js](https://nodejs.org/) 22.22 o superior, o 24.15 o superior (incluye npm)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (para la base de datos)
+- Angular CLI: `npm install -g @angular/cli`
+
+## Puesta en marcha
+
+Hacen falta tres cosas encendidas a la vez: la base de datos, el backend y el frontend. Usa una terminal para cada una.
+
+### 1. Base de datos
+
+```bash
+cd backend
+docker compose up -d
+```
+
+Abre Docker Desktop antes y espera a que ponga *Engine running*. La primera vez, MariaDB carga `init.sql` con el catálogo (tarda unos segundos).
+
+### 2. Backend
+
+En `backend/` crea un fichero `.env` con este contenido:
+
+```env
+PORT=3000
+DB_HOST=localhost
+DB_USER=admin
+DB_PASSWORD=Clave$1
+DB_NAME=ComponentesDB
+DB_PORT=3306
+JWT_SECRET=pon_aqui_una_clave_larga_cualquiera
+```
+
+Después:
+
+```bash
+npm install
+npm run dev
+```
+
+La API queda en `http://localhost:3000/api`.
+
+### 3. Frontend
+
+```bash
+cd frontend
+npm install
+ng serve
+```
+
+Abre `http://localhost:4200/`.
+
+## Si algo falla
+
+| Síntoma | Causa y solución |
+|---|---|
+| La web carga pero no sale ningún componente, o aparecen errores en la consola (`ERR_CONNECTION_REFUSED`) | El backend está apagado. Arráncalo con `npm run dev` en `backend/` y recarga |
+| El backend dice que no puede conectar con la base de datos | Docker Desktop no está abierto o el contenedor no ha terminado de arrancar. Abre Docker, ejecuta `docker compose up -d` en `backend/`, espera 10 segundos y vuelve a lanzar `npm run dev` |
+| `docker compose up -d` dice `no configuration file provided` | Estás en otra carpeta. Ejecútalo dentro de `backend/` |
+| El login falla o el backend no arranca por `JWT_SECRET` | Falta esa línea en `backend/.env` |
+| `ng` no se reconoce como comando | Instala Angular CLI (`npm install -g @angular/cli`) y abre una terminal nueva |
+| `Port 4200 is already in use` | Hay otro `ng serve` abierto. Ciérralo; no uses otro puerto, porque el backend solo acepta peticiones desde `http://localhost:4200` |
+| Cambié `init.sql` y el catálogo sigue igual | El script solo se ejecuta con la base vacía. Reinicia con `docker compose down -v` y `docker compose up -d` (borra los datos) |
+
+## Comandos útiles (desde `frontend/`)
+
+| Comando | Qué hace |
+|---|---|
+| `ng serve` | Servidor de desarrollo con recarga automática |
+| `ng build` | Compila para producción en `dist/frontend` |
+| `ng test` | Ejecuta las pruebas unitarias (Vitest) |
+| `ng generate component shared/nombre` | Crea un componente con su `.ts`, `.html` y `.css` |
+
+## Estructura del frontend
+
+```
+frontend/src/app/
+├── core/                 # Lógica compartida de la aplicación
+│   ├── guards/           # authGuard: protege rutas que exigen sesión
+│   ├── interceptors/     # authInterceptor: añade el token a las peticiones a la API
+│   ├── models/           # Interfaces TypeScript (Componente, Ejemplo, Usuario…)
+│   └── services/         # CatalogService, ComponenteService, AuthService, DemoRegistry
+├── features/             # Páginas de la aplicación
+└── shared/               # Componentes reutilizables y sus demos
+    ├── button/  card/  badge/  spinner/
+    ├── code-block/       # Muestra código como texto
+    └── demo-host/        # Carga dinámicamente la demo de cada ejemplo
+```
+
+Cada componente vive en su carpeta con tres ficheros separados (`.ts`, `.html`, `.css`) y sus demos en `demos/`.
+
+## Componentes
+
+Todos se importan como componentes *standalone*. Los valores por defecto son los que se usan si no se indica la propiedad.
+
+### `app-button`
+
+| Propiedad | Valores | Por defecto |
+|---|---|---|
+| `color` | `primary`, `secondary` | `primary` |
+| `disabled` | `true`, `false` | `false` |
+
+```html
+<app-button color="secondary" [disabled]="cargando">Cancelar</app-button>
+```
+
+### `app-card`
+
+| Propiedad | Valores | Por defecto |
+|---|---|---|
+| `titulo` | texto | vacío |
+| `subtitulo` | texto | vacío |
+
+El contenido va en el cuerpo. Lo que lleve el atributo `footer` se proyecta en el pie.
+
+```html
+<app-card titulo="Análisis" subtitulo="Cierre Q3">
+  <p>Contenido de la tarjeta.</p>
+  <div footer><app-button>Ver detalles</app-button></div>
+</app-card>
+```
+
+### `app-badge`
+
+| Propiedad | Valores | Por defecto |
+|---|---|---|
+| `color` | `neutral`, `success`, `warning`, `danger`, `info` | `neutral` |
+| `variant` | `subtle`, `solid`, `outline` | `subtle` |
+
+```html
+<app-badge color="success" variant="subtle">Activo</app-badge>
+```
+
+### `app-spinner`
+
+| Propiedad | Valores | Por defecto |
+|---|---|---|
+| `size` | `sm`, `md`, `lg` | `md` |
+| `color` | `primary`, `neutral`, `danger` | `primary` |
+| `label` | texto para lectores de pantalla | `Cargando` |
+
+```html
+<app-spinner size="lg" color="primary"></app-spinner>
+```
+
+## Cómo funciona el catálogo
+
+La información de cada componente (nombre, descripción, ejemplos de código) vive en la base de datos y llega por la API. Las demos son código Angular real dentro del frontend.
+
+Dos claves enlazan ambos mundos:
+
+- `selector` (`app-card`): identifica el componente y forma la URL de su página.
+- `demo_key` (`card-basic`): identifica qué demo cargar. Debe coincidir en `backend/init.sql` y en `core/services/demo-registry.service.ts`.
+
+Para añadir un componente nuevo: crear su carpeta en `shared/`, escribir su demo en `shared/<componente>/demos/`, registrar el `demo_key` en `DemoRegistry` y añadir sus filas en `init.sql`.
+
+## API (resumen)
+
+| Método | Ruta | Acceso |
+|---|---|---|
+| GET | `/api/componentes/catalogo` | Público |
+| GET | `/api/componentes/catalogo/:slug` | Público |
+| GET | `/api/componentes/:selector` | Público |
+| POST | `/api/auth/register` | Público |
+| POST | `/api/auth/login` | Público |
+| GET | `/api/favoritos` | Requiere `Authorization: Bearer <token>` |
+
+## Autoría
+
+- **Víctor Rodriguez Bon**: backend (API, base de datos, seguridad).
+- **Matías Romani Alviño**: diseño del frontend y páginas.
+- **Marcos Casas**: componentes y sus demos; servicios que conectan frontend y backend (`CatalogService`, `AuthService`), interceptor y guard de autenticación.
