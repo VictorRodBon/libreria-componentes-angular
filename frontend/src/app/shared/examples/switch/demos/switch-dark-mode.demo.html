@@ -1,0 +1,29 @@
+<div class="demo">
+  <div class="stage">
+    <div class="preview" [class.claro]="!modoOscuro()">
+      <app-switch
+        label="Activar modo oscuro"
+        [size]="tamano()"
+        [disabled]="desactivado()"
+        [(checked)]="modoOscuro"
+        (changed)="alCambiar($event)">
+      </app-switch>
+      <p>Vista previa en modo {{ modoOscuro() ? 'oscuro' : 'claro' }}.</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <label>
+      Tamaño:
+      <select (change)="tamano.set($any($event.target).value)">
+        <option value="md" [selected]="tamano() === 'md'">md</option>
+        <option value="sm" [selected]="tamano() === 'sm'">sm</option>
+      </select>
+    </label>
+    <label>
+      <input type="checkbox" [checked]="desactivado()" (change)="desactivado.set($any($event.target).checked)">
+      Desactivado
+    </label>
+    <span>Último evento changed: {{ ultimoCambio() }}</span>
+  </div>
+</div>

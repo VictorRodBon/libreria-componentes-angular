@@ -21,6 +21,12 @@ const DEMOS: Record<string, DemoLoader> = {
     import('../../shared/examples/spinner/demos/spinner-loading.demo').then((m) => m.SpinnerLoadingDemo),
   'alert-success': () =>
     import('../../shared/examples/alert/demos/alert-success.demo').then((m) => m.AlertSuccessDemo),
+  'input-labeled': () =>
+    import('../../shared/examples/input/demos/input-labeled.demo').then((m) => m.InputLabeledDemo),
+  'checkbox-acceptance': () =>
+    import('../../shared/examples/checkbox/demos/checkbox-acceptance.demo').then((m) => m.CheckboxAcceptanceDemo),
+  'switch-dark-mode': () =>
+    import('../../shared/examples/switch/demos/switch-dark-mode.demo').then((m) => m.SwitchDarkModeDemo),
 };
 
 @Injectable({ providedIn: 'root' })

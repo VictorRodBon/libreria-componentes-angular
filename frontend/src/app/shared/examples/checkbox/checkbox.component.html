@@ -1,0 +1,11 @@
+<label class="checkbox" [for]="id" [class.disabled]="disabled()">
+  <input
+    type="checkbox"
+    [id]="id"
+    [checked]="checked()"
+    [disabled]="disabled()"
+    (change)="toggle()">
+  @if (label()) {
+    <span>{{ label() }}</span>
+  }
+</label>

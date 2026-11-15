@@ -27,29 +27,29 @@ describe('AuthService', () => {
   afterEach(() => http.verify());
 
   it('al empezar no hay sesión', () => {
-    expect(servicio.isLoggedIn()).toBe(false);
-    expect(servicio.token).toBeNull();
+    expect(servicio.estaAutenticado()).toBe(false);
+    expect(servicio.token()).toBeNull();
   });
 
   it('login guarda el token y el usuario', () => {
-    servicio.login({ email: 'a@a.com', password: '12345678' }).subscribe();
+    servicio.login('a@a.com', '12345678').subscribe();
     const peticion = http.expectOne(`${API_URL}/auth/login`);
     expect(peticion.request.method).toBe('POST');
     peticion.flush(RESPUESTA);
 
-    expect(servicio.isLoggedIn()).toBe(true);
-    expect(servicio.token).toBe('TOKEN');
+    expect(servicio.estaAutenticado()).toBe(true);
+    expect(servicio.token()).toBe('TOKEN');
     expect(servicio.usuario()?.nombre).toBe('Ana');
   });
 
   it('logout borra la sesión', () => {
-    servicio.login({ email: 'a@a.com', password: '12345678' }).subscribe();
+    servicio.login('a@a.com', '12345678').subscribe();
     http.expectOne(`${API_URL}/auth/login`).flush(RESPUESTA);
 
     servicio.logout();
 
-    expect(servicio.isLoggedIn()).toBe(false);
-    expect(servicio.token).toBeNull();
+    expect(servicio.estaAutenticado()).toBe(false);
+    expect(servicio.token()).toBeNull();
     expect(localStorage.getItem('auth_token')).toBeNull();
   });
 });

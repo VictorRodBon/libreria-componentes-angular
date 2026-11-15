@@ -1,8 +1,18 @@
+/* La barra se queda fija arriba al hacer scroll. */
+:host {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: block;
+    background: var(--bg);
+}
 .bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 12px clamp(16px, 4vw, 32px);
+    height: var(--altura-barra);
+    box-sizing: border-box;
     border-bottom: 1px solid var(--border);
 }
 

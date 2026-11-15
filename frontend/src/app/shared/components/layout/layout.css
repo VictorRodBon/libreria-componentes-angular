@@ -1,13 +1,13 @@
 .layout {
   display: grid;
   grid-template-columns: 240px 1fr;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--altura-barra));
 }
 
 .sidebar {
   position: sticky;
-  top: 0;
-  height: 100vh;
+  top: var(--altura-barra);
+  height: calc(100vh - var(--altura-barra));
   overflow-y: auto;
   padding: 24px 16px;
   border-right: 1px solid var(--border);
