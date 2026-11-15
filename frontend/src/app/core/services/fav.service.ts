@@ -6,6 +6,12 @@ import { Favorito } from '../models/favorito.model';
 import { AuthService } from './auth.service';
 import { CatalogService } from './catalog.service';
 
+/**
+ * Gestiona los favoritos del usuario con sesión.
+ *
+ * Guarda en memoria los ids marcados para que los corazones se pinten al
+ * instante, y sincroniza con la API (GET, POST y DELETE /api/favoritos).
+ */
 @Injectable({ providedIn: 'root' })
 export class FavService {
   private readonly http = inject(HttpClient);
@@ -30,22 +36,27 @@ export class FavService {
     });
   }
 
+  /** True si el componente está en favoritos. */
   esFavorito(componenteId: number): boolean {
     return this._ids().has(componenteId);
   }
 
+  /** Cierra la ventana que pide iniciar sesión. */
   cerrarAviso(): void {
     this._avisoLogin.set(false);
   }
 
+  /** Lista completa de favoritos del usuario. */
   getFavorito(): Observable<Favorito[]> {
     return this.catalogo.getFavoritos();
   }
 
+  /** POST /api/favoritos/:componenteId */
   addFavorito(componenteId: number) {
     return this.http.post<unknown>(`${API_URL}/favoritos/${componenteId}`, {});
   }
 
+  /** DELETE /api/favoritos/:componenteId */
   borrarFavorito(componenteId: number) {
     return this.http.delete<unknown>(`${API_URL}/favoritos/${componenteId}`);
   }
@@ -68,6 +79,7 @@ export class FavService {
     peticion.subscribe({ error: () => this.cargar() });
   }
 
+  /** Pide a la API los favoritos y actualiza los ids en memoria. */
   private cargar(): void {
     this.getFavorito().subscribe({
       next: (lista) => this._ids.set(new Set(lista.map((f) => f.id))),
@@ -77,6 +89,7 @@ export class FavService {
     });
   }
 
+  /** Añade o quita un id del conjunto en memoria. */
   private marcar(componenteId: number, activo: boolean): void {
     this._ids.update((ids) => {
       const copia = new Set(ids);

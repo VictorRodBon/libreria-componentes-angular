@@ -1,5 +1,6 @@
 import { Categoria, Ejemplo } from './componente.model';
 
+/** Componente tal y como aparece en el listado del catálogo. */
 export interface ComponenteResumen {
   id: number;
   nombre: string;
@@ -8,6 +9,7 @@ export interface ComponenteResumen {
   ejemplos: Ejemplo[];
 }
 
+/** Categoría con su descripción y sus componentes (GET /api/componentes/catalogo). */
 export interface CategoriaConComponentes extends Categoria {
   descripcion: string;
   componentes: ComponenteResumen[];

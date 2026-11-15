@@ -6,6 +6,7 @@ import { CatalogService } from '../../../core/services/catalog.service';
 import { CategoriaConComponentes } from '../../../core/models/catalogo.model';
 import { CardComponente } from '../card-componente/card-componente';
 
+/** Página de listado: muestra todo el catálogo o solo una categoría, según la URL. */
 @Component({
   imports: [RouterLink, CardComponente],
   selector: 'app-main',

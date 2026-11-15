@@ -50,22 +50,27 @@ export class ComponentePageComponent {
       .subscribe((componente) => this.componente.set(componente));
   }
 
+  /** Pestaña activa del ejemplo (por defecto, HTML). */
   tabDe(indice: number): Lenguaje {
     return this.tabs()[indice] ?? 'html';
   }
 
+  /** Cambia la pestaña de código de un ejemplo. */
   elegirTab(indice: number, lenguaje: Lenguaje): void {
     this.tabs.update((t) => ({ ...t, [indice]: lenguaje }));
   }
 
+  /** True si el código del ejemplo está desplegado. */
   abierto(indice: number): boolean {
     return this.abiertos()[indice] ?? false;
   }
 
+  /** Muestra u oculta el código de un ejemplo. */
   alternarCodigo(indice: number): void {
     this.abiertos.update((a) => ({ ...a, [indice]: !a[indice] }));
   }
 
+  /** Devuelve el código del ejemplo en el lenguaje de la pestaña activa. */
   codigoDe(ejemplo: Componente['ejemplos'][number], indice: number) {
     if(this.tabDe(indice)==="html"){
       return ejemplo.codigo_html;
@@ -76,6 +81,7 @@ export class ComponentePageComponent {
     }
   }
 
+  /** Copia el código al portapapeles y marca el ejemplo como copiado durante 1,6 s. */
   async copiar(indice: number, codigo: string): Promise<void> {
     try {
       await navigator.clipboard.writeText(codigo);

@@ -1,0 +1,30 @@
+<header class="cabecera">
+  <h1>Cómo usar la librería</h1>
+  <p>Cuatro pasos para encontrar un componente, probarlo y llevártelo a tu proyecto.</p>
+</header>
+
+<section class="pasos">
+  @for (paso of pasos; track paso.titulo) {
+    <app-card [titulo]="paso.titulo">
+      <p>{{ paso.texto }}</p>
+      <div footer>
+        <a [routerLink]="paso.enlace">{{ paso.textoEnlace }} →</a>
+      </div>
+    </app-card>
+  }
+</section>
+
+<section class="faq">
+  <h2>Preguntas frecuentes</h2>
+  @for (item of preguntas; track item.pregunta; let i = $index) {
+    <div class="pregunta" [class.abierta]="abierta() === i">
+      <button type="button" [attr.aria-expanded]="abierta() === i" (click)="alternar(i)">
+        <span>{{ item.pregunta }}</span>
+        <span class="icono" aria-hidden="true">{{ abierta() === i ? '−' : '+' }}</span>
+      </button>
+      @if (abierta() === i) {
+        <p>{{ item.respuesta }}</p>
+      }
+    </div>
+  }
+</section>

@@ -6,6 +6,7 @@ import { CatalogService } from '../../../core/services/catalog.service';
 import { FavService } from '../../../core/services/fav.service';
 import { CardComponente } from '../card-componente/card-componente';
 
+/** Página de favoritos del usuario (protegida por authGuard). */
 @Component({
   imports: [CardComponente],
   selector: 'app-favoritos',
