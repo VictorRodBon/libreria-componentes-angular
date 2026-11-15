@@ -70,6 +70,21 @@ ng serve
 
 Abre `http://localhost:4200/`.
 
+## Versión de producción
+
+El backend también sirve la aplicación Angular compilada, así que en producción basta con un solo servidor:
+
+```bash
+cd frontend
+ng build              # genera frontend/dist/frontend/browser
+cd ../backend
+npm run dev           # o: node index.js
+```
+
+Abre `http://localhost:3000/`. Express entrega los ficheros de `frontend/dist/frontend/browser`, y cualquier ruta que no empiece por `/api` devuelve `index.html` para que Angular Router muestre la página que toca. La API sigue en `http://localhost:3000/api`. Como la web y la API salen del mismo servidor, no hace falta cambiar `CORS_ORIGIN`.
+
+`ng build` usa la configuración de producción: minifica el código, divide las páginas y demos en ficheros que se cargan solo cuando se visitan (*lazy loading*) y comprueba los límites de tamaño de `angular.json`.
+
 ## Si algo falla
 
 | Síntoma | Causa y solución |
