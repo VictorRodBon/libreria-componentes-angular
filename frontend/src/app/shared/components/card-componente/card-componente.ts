@@ -2,6 +2,7 @@ import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CardComponent } from '../../examples/card/card.component';
 import { ComponenteTarjeta } from '../../../core/models/catalogo.model';
+import { FavButtonComponent } from '../../fav-button/fav-button.component';
 
 /**
  * Tarjeta con la información de un componente del catálogo.
@@ -10,7 +11,7 @@ import { ComponenteTarjeta } from '../../../core/models/catalogo.model';
  * al detalle: /docs/:categoriaSlug/:selector
  */
 @Component({
-  imports: [RouterLink, CardComponent],
+  imports: [RouterLink, CardComponent, FavButtonComponent],
   selector: 'app-card-componente',
   styleUrl: './card-componente.css',
   templateUrl: './card-componente.html',

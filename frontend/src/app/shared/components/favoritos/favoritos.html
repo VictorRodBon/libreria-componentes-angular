@@ -1,7 +1,7 @@
 <h1>Mis favoritos</h1>
 
 <div class="grid">
-    @for (fav of favoritos(); track fav.favorito_id) {
+    @for (fav of visibles(); track fav.favorito_id) {
     <app-card-componente [componente]="fav" [categoriaSlug]="fav.categoria.slug" />
     } @empty {
     <p class="vacio">Todavía no tienes componentes favoritos.</p>

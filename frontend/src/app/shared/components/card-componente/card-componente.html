@@ -1,18 +1,22 @@
-<app-card
-  [titulo]="componente().nombre"
-  [subtitulo]="componente().selector"
-  animate.enter="fade-in"
->
-  <p class="descripcion">{{ componente().descripcion }}</p>
-  @if (componente().ejemplos; as ejemplos) {
-  <span class="contador">{{ ejemplos.length }} ejemplos</span>
-  }
+<div class="tarjeta">
+  <app-fav-button class="fav" [componenteId]="componente().id" />
 
-  <a
-    footer
-    class="enlace"
-    [routerLink]="['/docs', categoriaSlug(), componente().selector]"
+  <app-card
+    [titulo]="componente().nombre"
+    [subtitulo]="componente().selector"
+    animate.enter="fade-in"
   >
-    Ver componente →
-  </a>
-</app-card>
+    <p class="descripcion">{{ componente().descripcion }}</p>
+    @if (componente().ejemplos; as ejemplos) {
+    <span class="contador">{{ ejemplos.length }} ejemplos</span>
+    }
+
+    <a
+      footer
+      class="enlace"
+      [routerLink]="['/docs', categoriaSlug(), componente().selector]"
+    >
+      Ver componente →
+    </a>
+  </app-card>
+</div>

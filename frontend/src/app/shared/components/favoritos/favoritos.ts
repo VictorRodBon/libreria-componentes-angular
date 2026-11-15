@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
 import { Favorito } from '../../../core/models/favorito.model';
 import { CatalogService } from '../../../core/services/catalog.service';
+import { FavService } from '../../../core/services/fav.service';
 import { CardComponente } from '../card-componente/card-componente';
 
 @Component({
@@ -13,6 +14,7 @@ import { CardComponente } from '../card-componente/card-componente';
 })
 export class Favoritos {
   private readonly catalogo = inject(CatalogService);
+  private readonly fav = inject(FavService);
 
   /**
    * GET /api/favoritos
@@ -24,5 +26,10 @@ export class Favoritos {
       .getFavoritos()
       .pipe(catchError(() => of([] as Favorito[]))),
     { initialValue: [] as Favorito[] },
+  );
+
+  /** Los que siguen marcados: al quitar un corazón, la tarjeta desaparece. */
+  readonly visibles = computed(() =>
+    this.favoritos().filter((f) => this.fav.esFavorito(f.id)),
   );
 }
