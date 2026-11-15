@@ -1,0 +1,46 @@
+:host {
+  display: block;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  color: var(--text, #eaf1ee);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.required {
+  margin-left: 2px;
+  color: #ff7a7a;
+}
+
+input {
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--border-strong, #2a3532);
+  border-radius: 8px;
+  background: var(--surface-2, #141b19);
+  color: var(--text, #eaf1ee);
+  font: inherit;
+  font-size: 0.9375rem;
+}
+
+input::placeholder {
+  color: var(--text-3, #5d6b66);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--accent, #1fe39b);
+  box-shadow: 0 0 0 3px var(--accent-dim, rgba(31, 227, 155, 0.12));
+}
+
+input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

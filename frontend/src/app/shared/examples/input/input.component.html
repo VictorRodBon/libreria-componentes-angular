@@ -1,0 +1,19 @@
+<div class="field">
+  @if (label()) {
+    <label [for]="id">
+      {{ label() }}
+      @if (required()) {
+        <span class="required" aria-hidden="true">*</span>
+      }
+    </label>
+  }
+  <input
+    [id]="id"
+    [type]="type()"
+    [placeholder]="placeholder()"
+    [required]="required()"
+    [disabled]="disabled()"
+    [value]="value()"
+    (input)="alEscribir($any($event.target).value)"
+    (keydown.enter)="alPulsarEnter()">
+</div>

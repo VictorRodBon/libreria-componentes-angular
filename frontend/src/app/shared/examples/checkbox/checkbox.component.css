@@ -1,0 +1,29 @@
+:host {
+  display: inline-block;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text, #eaf1ee);
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--accent, #1fe39b);
+  cursor: pointer;
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.disabled input {
+  cursor: not-allowed;
+}

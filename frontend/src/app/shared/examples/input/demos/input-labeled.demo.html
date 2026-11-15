@@ -1,0 +1,26 @@
+<div class="demo">
+  <div class="stage">
+    <app-input
+      label="Nombre completo"
+      placeholder="Ej. Ana Pérez"
+      [required]="obligatorio()"
+      [disabled]="desactivado()"
+      [(value)]="nombre"
+      (submitted)="enviado.set($event)">
+    </app-input>
+  </div>
+
+  <div class="controls">
+    <label>
+      <input type="checkbox" [checked]="obligatorio()" (change)="obligatorio.set($any($event.target).checked)">
+      Obligatorio
+    </label>
+    <label>
+      <input type="checkbox" [checked]="desactivado()" (change)="desactivado.set($any($event.target).checked)">
+      Desactivado
+    </label>
+    <app-button color="secondary" (click)="vaciar()">Vaciar</app-button>
+    <span>Valor: "{{ nombre() }}"</span>
+    <span>Enviado con Enter: "{{ enviado() }}"</span>
+  </div>
+</div>

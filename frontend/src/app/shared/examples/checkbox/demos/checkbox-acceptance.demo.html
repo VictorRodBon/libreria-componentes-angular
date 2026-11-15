@@ -1,0 +1,22 @@
+<div class="demo">
+  <div class="stage">
+    <div class="formulario">
+      <app-checkbox
+        label="Acepto los términos y condiciones"
+        [disabled]="desactivado()"
+        [(checked)]="aceptado"
+        (changed)="alCambiar()">
+      </app-checkbox>
+      <app-button [disabled]="!aceptado()">Continuar</app-button>
+    </div>
+  </div>
+
+  <div class="controls">
+    <label>
+      <input type="checkbox" [checked]="desactivado()" (change)="desactivado.set($any($event.target).checked)">
+      Desactivado
+    </label>
+    <span>checked: {{ aceptado() }}</span>
+    <span>Evento changed emitido: {{ cambios() }}</span>
+  </div>
+</div>

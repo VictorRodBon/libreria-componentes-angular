@@ -81,7 +81,7 @@ Abre `http://localhost:4200/`.
 | `ng serve` | Servidor de desarrollo con recarga automática |
 | `ng build` | Compila para producción en `dist/frontend` |
 | `ng test` | Ejecuta las pruebas unitarias (Vitest) |
-| `ng generate component shared/nombre` | Crea un componente con su `.ts`, `.html` y `.css` |
+| `ng generate component shared/examples/nombre` | Crea un componente con su `.ts`, `.html` y `.css` |
 
 ## Estructura del frontend
 
@@ -92,14 +92,29 @@ frontend/src/app/
 │   ├── interceptors/     # authInterceptor: añade el token a las peticiones a la API
 │   ├── models/           # Interfaces TypeScript (Componente, Ejemplo, Usuario…)
 │   └── services/         # CatalogService, ComponenteService, AuthService, DemoRegistry
-├── features/             # Páginas de la aplicación
-└── shared/               # Componentes reutilizables y sus demos
-    ├── button/  card/  badge/  spinner/  alert/
-    ├── code-block/       # Muestra código como texto
-    └── demo-host/        # Carga dinámicamente la demo de cada ejemplo
+├── features/             # Páginas cargadas por ruta: detalle de componente, login y registro
+└── shared/
+    ├── components/       # Piezas de la aplicación: layout (menú), inicio, main (listado por categoría),
+    │                     # favoritos, card-componente, fav-button, btn-atras, code-block, demo-host
+    ├── auth-bar/         # Barra superior: marca, iniciar sesión, registrarse
+    └── examples/         # Componentes de la librería y sus demos
+        ├── button/  card/  badge/  spinner/  alert/
+        └── input/  checkbox/  switch/
 ```
 
-Cada componente vive en su carpeta con tres ficheros separados (`.ts`, `.html`, `.css`) y sus demos en `demos/`.
+Cada componente de `shared/examples/` vive en su carpeta con tres ficheros separados (`.ts`, `.html`, `.css`), su prueba `.spec.ts` y sus demos en `demos/`.
+
+### Páginas y menú
+
+| Ruta | Página |
+|---|---|
+| `/` | Inicio |
+| `/categoria` y `/categoria/:slug` | Listado de componentes, todos o por categoría |
+| `/docs/:categoria/:selector` | Detalle de un componente con su demo y su código |
+| `/favoritos` | Favoritos del usuario (protegida por `authGuard`) |
+| `/login` y `/registro` | Inicio de sesión y registro |
+
+La barra superior lleva a Inicio, Iniciar sesión y Registrarse; la barra lateral, a cada categoría y a Favoritos.
 
 ## Componentes
 
@@ -177,9 +192,78 @@ El contenido va en el cuerpo. Lo que lleve el atributo `footer` se proyecta en e
 </app-alert>
 ```
 
+### `app-input`
+
+| Propiedad | Valores | Por defecto |
+|---|---|---|
+| `label` | texto | vacío |
+| `placeholder` | texto | vacío |
+| `type` | `text`, `email`, `password` | `text` |
+| `required` | `true`, `false` | `false` |
+| `disabled` | `true`, `false` | `false` |
+| `value` | texto, con doble enlace `[(value)]` | vacío |
+
+| Evento | Cuándo se emite |
+|---|---|
+| `valueChange` | En cada cambio del texto (lo genera `model()`) |
+| `submitted` | Al pulsar Enter, con el texto actual |
+
+| Método | Qué hace |
+|---|---|
+| `clear()` | Vacía el campo |
+
+```html
+<app-input label="Nombre" placeholder="Ej. Ana" [required]="true" [(value)]="nombre" (submitted)="enviar($event)"></app-input>
+```
+
+### `app-checkbox`
+
+| Propiedad | Valores | Por defecto |
+|---|---|---|
+| `label` | texto | vacío |
+| `disabled` | `true`, `false` | `false` |
+| `checked` | `true`, `false`, con doble enlace `[(checked)]` | `false` |
+
+| Evento | Cuándo se emite |
+|---|---|
+| `changed` | Al marcarla o desmarcarla, con el nuevo estado |
+
+| Método | Qué hace |
+|---|---|
+| `toggle()` | Invierte el estado y emite `changed` (no hace nada si está desactivada) |
+
+```html
+<app-checkbox label="Acepto los términos" [(checked)]="aceptado" (changed)="alCambiar($event)"></app-checkbox>
+```
+
+### `app-switch`
+
+| Propiedad | Valores | Por defecto |
+|---|---|---|
+| `label` | texto | vacío |
+| `size` | `sm`, `md` | `md` |
+| `disabled` | `true`, `false` | `false` |
+| `checked` | `true`, `false`, con doble enlace `[(checked)]` | `false` |
+
+| Evento | Cuándo se emite |
+|---|---|
+| `changed` | Al pulsarlo, con el nuevo estado |
+
+| Método | Qué hace |
+|---|---|
+| `toggle()` | Invierte el estado y emite `changed` (no hace nada si está desactivado) |
+
+```html
+<app-switch label="Modo oscuro" [(checked)]="modoOscuro" (changed)="alCambiar($event)"></app-switch>
+```
+
+### Componentes sin demo
+
+`app-tabs` y `app-modal` están en el catálogo pero todavía no tienen demo. Se dejan a propósito para mostrar cómo responde la aplicación: la página carga la información y el código, y en lugar de la demo aparece el aviso "Demo no registrada".
+
 ## Pruebas unitarias
 
-Cada componente tiene su fichero `.spec.ts` al lado (Vitest + TestBed). Comprueban los valores por defecto, que cada propiedad cambia lo que se pinta y, en `app-alert`, que el evento `dismissed` se emite. `AuthService` se prueba con `HttpTestingController`, sin necesidad de backend.
+Cada componente tiene su fichero `.spec.ts` al lado (Vitest + TestBed). Comprueban los valores por defecto, que cada propiedad cambia lo que se pinta y que los eventos (`dismissed`, `changed`, `submitted`, `valueChange`) se emiten cuando toca. También hay pruebas de creación de las páginas (inicio, layout, main, favoritos…). `AuthService` se prueba con `HttpTestingController`, sin necesidad de backend.
 
 ```bash
 cd frontend
@@ -195,7 +279,7 @@ Dos claves enlazan ambos mundos:
 - `selector` (`app-card`): identifica el componente y forma la URL de su página.
 - `demo_key` (`card-basic`): identifica qué demo cargar. Debe coincidir en `backend/init.sql` y en `core/services/demo-registry.service.ts`.
 
-Para añadir un componente nuevo: crear su carpeta en `shared/`, escribir su demo en `shared/<componente>/demos/`, registrar el `demo_key` en `DemoRegistry` y añadir sus filas en `init.sql`.
+Para añadir un componente nuevo: crear su carpeta en `shared/examples/`, escribir su demo en `shared/examples/<componente>/demos/`, registrar el `demo_key` en `DemoRegistry` y añadir sus filas en `init.sql`.
 
 ## API (resumen)
 

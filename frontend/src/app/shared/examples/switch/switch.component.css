@@ -1,0 +1,68 @@
+:host {
+  display: inline-block;
+}
+
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text, #eaf1ee);
+  font: inherit;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+.track {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  border-radius: 999px;
+  background: var(--border-strong, #2a3532);
+  transition: background 0.2s;
+}
+
+.thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s;
+}
+
+.switch-sm .track {
+  width: 32px;
+  height: 18px;
+}
+
+.switch-sm .thumb {
+  width: 12px;
+  height: 12px;
+}
+
+.on .track {
+  background: var(--accent, #1fe39b);
+}
+
+.on .thumb {
+  transform: translateX(18px);
+}
+
+.switch-sm.on .thumb {
+  transform: translateX(14px);
+}
+
+.switch:focus-visible .track {
+  outline: 2px solid var(--accent, #1fe39b);
+  outline-offset: 2px;
+}
+
+.switch:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
