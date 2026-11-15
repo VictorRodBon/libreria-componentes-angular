@@ -9,11 +9,13 @@ interface ApiResponse<T> {
   data: T;
 }
 
+/** Obtiene el detalle de un componente para su página de documentación. */
 @Injectable({ providedIn: 'root' })
 export class ComponenteService {
   private readonly http = inject(HttpClient);
   private readonly api = 'http://localhost:3000/api';
 
+  /** GET /api/componentes/:selector → componente con su categoría y sus ejemplos. */
   getComponente(selector: string): Observable<Componente> {
     return this.http
       .get<ApiResponse<Componente>>(`${this.api}/componentes/${selector}`)

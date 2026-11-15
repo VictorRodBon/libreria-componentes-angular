@@ -4,6 +4,7 @@ import { Favoritos } from './shared/components/favoritos/favoritos';
 import { Layout } from './shared/components/layout/layout';
 import { authGuard } from './core/guards/auth.guard';
 import { Inicio } from './shared/components/inicio/inicio';
+import { ComoUsar } from './shared/components/como-usar/como-usar';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,10 @@ export const routes: Routes = [
       {
         path: 'categoria/:categoriaSlug',
         component: Main,
+      },
+      {
+        path: 'como-usar',
+        component: ComoUsar,
       },
       {
         path: 'favoritos',

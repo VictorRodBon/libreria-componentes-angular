@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { AuthService, mensajeError } from '../../core/services/auth.service';
 
+/** Página de registro: crea la cuenta y, si va bien, inicia sesión automáticamente. */
 @Component({
   selector: 'app-register',
   imports: [ReactiveFormsModule, RouterLink],
@@ -75,11 +76,13 @@ export class RegisterComponent {
   readonly enviando = signal(false);
   readonly error = signal<string | null>(null);
 
+  /** True si el campo es inválido y el usuario ya lo ha tocado (para mostrar el error). */
   invalido(campo: 'nombre' | 'email' | 'password'): boolean {
     const control = this.form.controls[campo];
     return control.invalid && control.touched;
   }
 
+  /** Valida el formulario, registra al usuario y después hace login. */
   enviar(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();

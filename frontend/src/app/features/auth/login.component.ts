@@ -3,6 +3,10 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthService, mensajeError } from '../../core/services/auth.service';
 
+/**
+ * Página de inicio de sesión con formulario reactivo y validación.
+ * Si la URL trae ?returnUrl=..., al entrar vuelve a esa página.
+ */
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, RouterLink],
@@ -64,11 +68,13 @@ export class LoginComponent {
   readonly enviando = signal(false);
   readonly error = signal<string | null>(null);
 
+  /** True si el campo es inválido y el usuario ya lo ha tocado (para mostrar el error). */
   invalido(campo: 'email' | 'password'): boolean {
     const control = this.form.controls[campo];
     return control.invalid && control.touched;
   }
 
+  /** Valida el formulario y llama a AuthService.login; muestra el error de la API si falla. */
   enviar(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();

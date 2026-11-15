@@ -2,6 +2,7 @@
       <a routerLink="/" class="marca">Componentes</a>
 
       <div class="acciones">
+        <a routerLink="/como-usar">Cómo usar</a>
         @if (auth.usuario(); as usuario) {
           <span class="nombre">{{ usuario.nombre }}</span>
           <button type="button" (click)="salir()">Cerrar sesión</button>

@@ -31,7 +31,14 @@ Abre Docker Desktop antes y espera a que ponga *Engine running*. La primera vez,
 
 ### 2. Backend
 
-En `backend/` crea un fichero `.env` con este contenido:
+En `backend/` copia `.env.example` como `.env`:
+
+```bash
+copy .env.example .env      # Windows (CMD)
+cp .env.example .env        # macOS / Linux
+```
+
+Y rellénalo con estos valores, que coinciden con los de `docker-compose.yml`:
 
 ```env
 PORT=3000
@@ -41,6 +48,7 @@ DB_PASSWORD=Clave$1
 DB_NAME=ComponentesDB
 DB_PORT=3306
 JWT_SECRET=pon_aqui_una_clave_larga_cualquiera
+CORS_ORIGIN=http://localhost:4200
 ```
 
 Después:
@@ -90,13 +98,16 @@ frontend/src/app/
 ├── core/                 # Lógica compartida de la aplicación
 │   ├── guards/           # authGuard: protege rutas que exigen sesión
 │   ├── interceptors/     # authInterceptor: añade el token a las peticiones a la API
-│   ├── models/           # Interfaces TypeScript (Componente, Ejemplo, Usuario…)
-│   └── services/         # CatalogService, ComponenteService, AuthService, DemoRegistry
+│   ├── models/           # Interfaces TypeScript (Componente, Ejemplo, Usuario, Favorito…)
+│   ├── services/         # CatalogService, ComponenteService, AuthService, FavService, DemoRegistry
+│   └── api.config.ts     # Dirección base de la API
 ├── features/             # Páginas cargadas por ruta: detalle de componente, login y registro
 └── shared/
-    ├── components/       # Piezas de la aplicación: layout (menú), inicio, main (listado por categoría),
-    │                     # favoritos, card-componente, fav-button, btn-atras, code-block, demo-host
-    ├── auth-bar/         # Barra superior: marca, iniciar sesión, registrarse
+    ├── components/       # Piezas de la aplicación: layout (menú lateral), inicio, como-usar,
+    │                     # main (listado), favoritos, card-componente, fav-button, btn-atras,
+    │                     # code-block, demo-host
+    ├── auth-bar/         # Barra superior fija: Inicio, Cómo usar, iniciar sesión, registrarse
+    ├── login-modal/      # Ventana que pide iniciar sesión al pulsar un favorito sin sesión
     └── examples/         # Componentes de la librería y sus demos
         ├── button/  card/  badge/  spinner/  alert/
         └── input/  checkbox/  switch/
@@ -109,12 +120,17 @@ Cada componente de `shared/examples/` vive en su carpeta con tres ficheros separ
 | Ruta | Página |
 |---|---|
 | `/` | Inicio |
+| `/como-usar` | Guía rápida de uso y preguntas frecuentes |
 | `/categoria` y `/categoria/:slug` | Listado de componentes, todos o por categoría |
 | `/docs/:categoria/:selector` | Detalle de un componente con su demo y su código |
-| `/favoritos` | Favoritos del usuario (protegida por `authGuard`) |
+| `/favoritos` | Favoritos del usuario (protegida por `authGuard`; si no hay sesión, redirige a `/login`) |
 | `/login` y `/registro` | Inicio de sesión y registro |
 
-La barra superior lleva a Inicio, Iniciar sesión y Registrarse; la barra lateral, a cada categoría y a Favoritos.
+La barra superior, fija al hacer scroll, lleva a Inicio, Cómo usar, Iniciar sesión y Registrarse (con sesión, muestra el nombre y Cerrar sesión). La barra lateral lleva a cada categoría y, con sesión, a Favoritos.
+
+### Favoritos
+
+Cada tarjeta y cada página de componente tienen un corazón. Con sesión, lo marca o desmarca al instante y lo guarda en la API. Sin sesión, abre una ventana que invita a iniciar sesión o registrarse.
 
 ## Componentes
 
@@ -263,7 +279,7 @@ El contenido va en el cuerpo. Lo que lleve el atributo `footer` se proyecta en e
 
 ## Pruebas unitarias
 
-Cada componente tiene su fichero `.spec.ts` al lado (Vitest + TestBed). Comprueban los valores por defecto, que cada propiedad cambia lo que se pinta y que los eventos (`dismissed`, `changed`, `submitted`, `valueChange`) se emiten cuando toca. También hay pruebas de creación de las páginas (inicio, layout, main, favoritos…). `AuthService` se prueba con `HttpTestingController`, sin necesidad de backend.
+Cada componente tiene su fichero `.spec.ts` al lado (Vitest + TestBed). Comprueban los valores por defecto, que cada propiedad cambia lo que se pinta y que los eventos (`dismissed`, `changed`, `submitted`, `valueChange`) se emiten cuando toca. También hay pruebas de las páginas: creación de inicio, layout, main y favoritos, y en `como-usar` el funcionamiento del acordeón de preguntas. `AuthService` se prueba con `HttpTestingController`, sin necesidad de backend.
 
 ```bash
 cd frontend
@@ -287,13 +303,18 @@ Para añadir un componente nuevo: crear su carpeta en `shared/examples/`, escrib
 |---|---|---|
 | GET | `/api/componentes/catalogo` | Público |
 | GET | `/api/componentes/catalogo/:slug` | Público |
+| GET | `/api/componentes/categorias` | Público |
 | GET | `/api/componentes/:selector` | Público |
 | POST | `/api/auth/register` | Público |
 | POST | `/api/auth/login` | Público |
 | GET | `/api/favoritos` | Requiere `Authorization: Bearer <token>` |
+| POST | `/api/favoritos/:componenteId` | Requiere token |
+| DELETE | `/api/favoritos/:componenteId` | Requiere token |
+
+Todas las respuestas tienen la forma `{ success, data }`. Sin token, las rutas de favoritos responden 403; con un token inválido o caducado, 401.
 
 ## Autoría
 
-- **Víctor Rodriguez Bon**: backend (API, base de datos, seguridad).
-- **Matías Romani Alviño**: diseño del frontend y páginas.
-- **Marcos Casas**: componentes y sus demos; servicios que conectan frontend y backend (`CatalogService`, `AuthService`), interceptor y guard de autenticación.
+- **Víctor Rodriguez Bon**: backend (API, base de datos, autenticación con JWT, favoritos). En el frontend: layout con menú lateral, página de inicio, listado por categoría, página de favoritos, tarjetas de componente y página de detalle.
+- **Matías Romani Alviño**: login y registro, barra superior y sistema de favoritos en el frontend (`FavService`, botón de corazón y ventana de inicio de sesión).
+- **Marcos Casas**: componentes de la librería y sus demos (button, card, badge, spinner, alert, input, checkbox, switch); servicios que conectan frontend y backend (`CatalogService`, `AuthService`), interceptor y guard; pruebas unitarias; página Cómo usar; README.

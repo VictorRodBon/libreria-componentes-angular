@@ -2,6 +2,10 @@ import { Component, ElementRef, effect, inject, viewChild } from '@angular/core'
 import { Router, RouterLink } from '@angular/router';
 import { FavService } from '../../core/services/fav.service';
 
+/**
+ * Ventana modal que pide iniciar sesión. Se abre cuando alguien sin sesión
+ * pulsa el corazón de favoritos (FavService.avisoLogin) y usa <dialog> nativo.
+ */
 @Component({
   selector: 'app-login-modal',
   imports: [RouterLink],
@@ -14,6 +18,7 @@ export class LoginModalComponent {
 
   private readonly dialogo = viewChild.required<ElementRef<HTMLDialogElement>>('dialogo');
 
+  /** Abre o cierra el <dialog> cada vez que cambia el aviso de FavService. */
   constructor() {
     effect(() => {
       const el = this.dialogo().nativeElement;

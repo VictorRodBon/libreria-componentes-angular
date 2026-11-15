@@ -28,10 +28,12 @@ export class DemoHostComponent implements OnChanges {
   readonly loading = signal(false);
   readonly error = signal<string | null>(null);
 
+  /** Cada vez que cambia el demoKey, carga la demo correspondiente. */
   ngOnChanges(): void {
     void this.load(this.demoKey());
   }
 
+  /** Busca la demo en el registro; si no existe, guarda el mensaje de error para mostrarlo. */
   private async load(key: string): Promise<void> {
     this.loading.set(true);
     this.error.set(null);
