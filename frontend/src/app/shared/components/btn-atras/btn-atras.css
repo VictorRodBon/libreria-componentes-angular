@@ -5,16 +5,15 @@
 button {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 14px 6px 12px;
-  border: 1px solid var(--border-strong, #2b3833);
-  border-radius: 8px;
-  background: transparent;
+  gap: 6px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
   color: var(--text-2, #8b9a95);
   font: inherit;
   font-size: 0.875rem;
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  transition: color 0.15s;
 }
 
 button::before {
@@ -24,10 +23,19 @@ button::before {
   border-left: 1.5px solid currentColor;
   border-bottom: 1.5px solid currentColor;
   transform: rotate(45deg);
+  transition: transform 0.15s;
 }
 
 button:hover {
-  border-color: var(--text-2, #8b9a95);
-  background: var(--surface-2, #151d1a);
   color: var(--text, #eaf1ee);
+}
+
+button:hover::before {
+  transform: translateX(-2px) rotate(45deg);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent, #5fbf9f);
+  outline-offset: 4px;
+  border-radius: 4px;
 }

@@ -6,28 +6,44 @@
 }
 
 /* ---------- Cabecera ---------- */
-.volver {
-    display: block;
-    margin-bottom: 28px;
-}
-
 .page-header {
     margin-bottom: 56px;
 }
 
+.page-header__barra {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin-bottom: 20px;
+}
+
 .categoria {
-    margin: 0 0 12px;
+    margin: 0;
     color: var(--accent);
     font-size: 0.9375rem;
     font-weight: 500;
 }
 
-h1 {
-    margin: 0 0 16px;
+.page-header__titulo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.page-header__titulo h1 {
+    flex: 1 1 auto;
+    margin: 0;
     font-size: clamp(2.25rem, 5vw, 3rem);
     font-weight: 500;
     line-height: 1.05;
     letter-spacing: -0.035em;
+}
+
+.fav {
+    flex: none;
 }
 
 .descripcion {
@@ -78,26 +94,21 @@ h3 {
 }
 
 /* ---------- Ver código ---------- */
-details {
-    margin-top: 8px;
-}
-
-summary {
+.toggle {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    margin-top: 8px;
     padding: 8px 0;
+    border: 0;
+    background: none;
     color: var(--text-2);
     font-size: 0.875rem;
     cursor: pointer;
-    list-style: none;
+    transition: color 0.15s;
 }
 
-summary::-webkit-details-marker {
-    display: none;
-}
-
-summary::before {
+.toggle::before {
     content: '';
     width: 6px;
     height: 6px;
@@ -107,17 +118,40 @@ summary::before {
     transition: transform 0.15s;
 }
 
-details[open]>summary::before {
+.toggle.is-on::before {
     transform: rotate(45deg);
 }
 
-summary:hover {
+.toggle:hover {
     color: var(--text);
+}
+
+.code-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    margin-top: 8px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition:
+        grid-template-rows 300ms ease,
+        opacity 200ms ease,
+        transform 200ms ease;
+}
+
+.code-wrap.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.code-wrap>.code {
+    min-height: 0;
 }
 
 .code {
     overflow: hidden;
-    margin-top: 8px;
+    margin-top: 0;
     border: 1px solid var(--border-strong);
     border-radius: 12px;
     background: var(--surface);

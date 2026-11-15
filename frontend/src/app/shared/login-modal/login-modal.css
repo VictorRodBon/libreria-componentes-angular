@@ -1,0 +1,55 @@
+dialog {
+    width: calc(100% - 32px);
+    max-width: 420px;
+    padding: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--text);
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.contenido {
+    padding: 24px;
+}
+
+h2 {
+    margin: 0 0 8px;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+p {
+    margin: 0 0 24px;
+    color: var(--text-2);
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+}
+
+.acciones button,
+.acciones a {
+    padding: 8px 14px;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    background: none;
+    color: var(--text);
+    font: inherit;
+    font-size: 0.875rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.acciones .primario {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+}

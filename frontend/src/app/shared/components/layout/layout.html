@@ -19,6 +19,14 @@
           {{ cat.nombre }}
         </a>
       }
+      @if (auth.usuario(); as usuario) {
+        <a
+          routerLink="/favoritos"
+          routerLinkActive="activo"
+        >
+          Favoritos
+        </a>
+      }
     </nav>
   </aside>
 

@@ -1,0 +1,13 @@
+<nav class="bar">
+      <a routerLink="/" class="marca">Componentes</a>
+
+      <div class="acciones">
+        @if (auth.usuario(); as usuario) {
+          <span class="nombre">{{ usuario.nombre }}</span>
+          <button type="button" (click)="salir()">Cerrar sesión</button>
+        } @else {
+          <a routerLink="/login">Iniciar sesión</a>
+          <a routerLink="/registro" class="registro">Registrarse</a>
+        }
+      </div>
+    </nav>

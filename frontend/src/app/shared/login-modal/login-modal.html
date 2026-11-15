@@ -1,0 +1,22 @@
+<dialog
+      #dialogo
+      aria-labelledby="modal-titulo"
+      (close)="fav.cerrarAviso()"
+      (click)="clicFuera($event)"
+    >
+      <div class="contenido">
+        <h2 id="modal-titulo">Inicia sesión para guardar favoritos</h2>
+        <p>Necesitas una cuenta para marcar componentes como favoritos.</p>
+        <div class="acciones">
+          <button type="button" (click)="fav.cerrarAviso()">Cancelar</button>
+          <a routerLink="/registro" (click)="fav.cerrarAviso()">Registrarse</a>
+          <a
+            routerLink="/login"
+            class="primario"
+            [queryParams]="{ returnUrl: router.url }"
+            (click)="fav.cerrarAviso()"
+            >Iniciar sesión</a
+          >
+        </div>
+      </div>
+    </dialog>

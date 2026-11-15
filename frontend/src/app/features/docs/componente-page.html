@@ -1,9 +1,18 @@
 <div animate.enter="fade-in">
-<app-btn-atras class="volver" />
+<div class="page-header__barra">
+    <app-btn-atras class="volver" />
+    @if (componente(); as comp) {
+    <p class="categoria">{{ comp.categoria.nombre }}</p>
+    }
+</div>
+
 @if (componente(); as comp) {
 <header class="page-header">
-    <p class="categoria">{{ comp.categoria.nombre }}</p>
-    <h1>{{ comp.nombre }}</h1>
+    <div class="page-header__titulo">
+        <h1>{{ comp.nombre }}</h1>
+        <app-fav-button class="fav" [componenteId]="comp.id" />
+    </div>
+
     <p class="descripcion">{{ comp.descripcion }}</p>
     <code class="selector">{{ comp.selector }}</code>
 </header>
@@ -23,9 +32,13 @@
         }
 
         <!-- Código de ejemplo (solo texto) -->
-        <details>
-            <summary>Ver código</summary>
+        <button type="button" class="toggle" [class.is-on]="abierto(i)" [attr.aria-expanded]="abierto(i)"
+            [attr.aria-controls]="'codigo-' + i" (click)="alternarCodigo(i)">
+            Ver código
+        </button>
 
+        <div class="code-wrap" [class.is-open]="abierto(i)" [inert]="!abierto(i)"
+            [attr.aria-hidden]="!abierto(i)" [id]="'codigo-' + i">
             <div class="code">
                 <div class="code__bar">
                     <div class="code__tabs" role="tablist">
@@ -48,7 +61,7 @@
                 </div>
                 <app-code-block [code]="codigoDe(ejemplo, i)"></app-code-block>
             </div>
-        </details>
+        </div>
     </article>
     } @empty {
     <p class="vacio">Este componente todavía no tiene ejemplos.</p>

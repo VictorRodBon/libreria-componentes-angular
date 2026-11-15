@@ -6,6 +6,7 @@ import { DemoHostComponent } from '../../shared/components/demo-host/demo-host.c
 import { Componente } from '../../core/models/componente.model';
 import { ComponenteService } from '../../core/services/componente.service';
 import { BtnAtras } from '../../shared/components/btn-atras/btn-atras';
+import { FavButtonComponent } from '../../shared/components/fav-button/fav-button.component';
 
 type Lenguaje = 'html' | 'ts' | 'css';
 
@@ -21,7 +22,7 @@ type Lenguaje = 'html' | 'ts' | 'css';
  */
 @Component({
   selector: 'app-componente-page',
-  imports: [DemoHostComponent, CodeBlockComponent, BtnAtras],
+  imports: [DemoHostComponent, CodeBlockComponent, BtnAtras, FavButtonComponent],
   templateUrl: `./componente-page.html`,
   styleUrl: `./componente-page.css`,
 })
@@ -33,6 +34,8 @@ export class ComponentePageComponent {
 
   /** Pestaña activa (HTML / TypeScript / CSS) de cada ejemplo, por posición. */
   private readonly tabs = signal<Record<number, Lenguaje>>({});
+  /** Si el bloque de código de cada ejemplo está desplegado, por posición. */
+  private readonly abiertos = signal<Record<number, boolean>>({});
   /** Posición del ejemplo cuyo código se acaba de copiar. */
   readonly copiado = signal<number | null>(null);
 
@@ -55,9 +58,15 @@ export class ComponentePageComponent {
     this.tabs.update((t) => ({ ...t, [indice]: lenguaje }));
   }
 
+  abierto(indice: number): boolean {
+    return this.abiertos()[indice] ?? false;
+  }
+
+  alternarCodigo(indice: number): void {
+    this.abiertos.update((a) => ({ ...a, [indice]: !a[indice] }));
+  }
+
   codigoDe(ejemplo: Componente['ejemplos'][number], indice: number) {
-    let codigo:string = "";
-    
     if(this.tabDe(indice)==="html"){
       return ejemplo.codigo_html;
     }else if(this.tabDe(indice)==="ts"){

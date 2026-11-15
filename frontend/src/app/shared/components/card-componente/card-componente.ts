@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CardComponent } from '../../examples/card/card.component';
 import { ComponenteTarjeta } from '../../../core/models/catalogo.model';
-import { FavButtonComponent } from '../../fav-button/fav-button.component';
+import { FavButtonComponent } from '../fav-button/fav-button.component';
 
 /**
  * Tarjeta con la información de un componente del catálogo.
